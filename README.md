@@ -2,12 +2,11 @@
 
 > Learn more [about TonicPow](https://tonicpow.com/). Checkout the [TonicPow API Docs](https://docs.tonicpow.com).
 
-[![last commit](https://img.shields.io/github/last-commit/tonicpow/widget.svg?style=flat)](https://github.com/tonicpow/widget/commits/master)
-[![version](https://img.shields.io/github/release-pre/tonicpow/widget.svg?style=flat)](https://github.com/tonicpow/widget/releases)
-[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat)](https://github.com/RichardLitt/standard-readme)
+[![last commit](https://img.shields.io/github/last-commit/tonicpow/widget.svg?style=flat&v=1)](https://github.com/tonicpow/widget/commits/master)
+[![version](https://img.shields.io/github/release-pre/tonicpow/widget.svg?style=flat&v=1)](https://github.com/tonicpow/widget/releases)
 [![Sponsor](https://img.shields.io/badge/sponsor-TonicPow-181717.svg?logo=github&style=flat&v=1)](https://github.com/sponsors/TonicPow)
-[![slack](https://img.shields.io/badge/slack-tonicpow-orange.svg?style=flat)](https://atlantistic.slack.com/app_redirect?channel=tonicpow)
-[![app health](https://img.shields.io/website-up-down-green-red/https/tonicpow.com.svg?label=status)](https://tonicpow.com/)
+[![slack](https://img.shields.io/badge/slack-tonicpow-orange.svg?style=flat&v=1)](https://atlantistic.slack.com/app_redirect?channel=tonicpow)
+[![app health](https://img.shields.io/website-up-down-green-red/https/tonicpow.com.svg?label=status&v=1)](https://tonicpow.com/)
 
 ## Table of Contents
 - [Installation](#installation)
@@ -30,18 +29,23 @@
 <div class="tonicpow-widget" data-widget-id="your-widget-id-here"></div>
 ```
 
-#### Building (For Developers)
+<details>
+<summary><strong><code>Get Visitor Session</code></strong></summary>
+
+```javascript
+let session = window.TonicPow.getVisitorSession()
+console.log(session) // 1b40c235dd9532213f5d611ffz06f9dd018efeffad8d6fbc35dc421fed18babz
+``` 
+</details>
+
+<details>
+<summary><strong><code>Build From Scratch</code></strong></summary>
+
 ```shell script
 make install
 make build
 ```
-
-#### Capture Visitor Session
-_(Optional)_ Get the visitor session
-```javascript
-let session = window.TonicPow.getVisitorSession()
-console.log(session) //1b40c235dd9532213f5d611ffz06f9dd018efeffad8d6fbc35dc421fed18babz
-```       
+</details>
 
 <br/>
 
@@ -139,9 +143,9 @@ View the [contributing guidelines](CONTRIBUTING.md) and follow the [code of cond
 All kinds of contributions are welcome :raised_hands:!
 The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon:.
 You can also support this project by [becoming a sponsor on GitHub](https://github.com/sponsors/TonicPow) :clap:
-or by making a [**bitcoin donation**](https://gobitcoinsv.com/#sponsor) to ensure this journey continues indefinitely! :rocket:
+or by making a [**bitcoin donation**](https://tonicpow.com/?utm_source=github&utm_medium=sponsor-link&utm_campaign=widget&utm_term=widget&utm_content=widget) to ensure this journey continues indefinitely! :rocket:
 
 <br/>
 
 ## License
-[![License](https://img.shields.io/badge/license-Open%20BSV-brightgreen.svg?style=flat)](/LICENSE)
+[![License](https://img.shields.io/badge/license-Open%20BSV-brightgreen.svg?style=flat&v=1)](/LICENSE)
