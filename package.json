@@ -1,0 +1,59 @@
+{
+  "name": "widget",
+  "version": "0.0.1",
+  "description": "TonicPow Widget helps manage visitor sessions and load any TonicPow Widgets",
+  "main": "dist/widget.js",
+  "author": {
+    "name": "TonicPow",
+    "email": "support@tonicpow.com",
+    "url": "https://docs.tonicpow.com"
+  },
+  "contributors": [
+    {
+      "name": "Satchmo",
+      "url": "https://github.com/rohenaz/"
+    },
+    {
+      "name": "MrZ",
+      "url": "https://github.com/mrz1836/"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/tonicpow/widget/issues"
+  },
+  "homepage": "https://docs.tonicpow.com",
+  "scripts": {
+    "lint": "cd src && standard --fix || true",
+    "build": "webpack --config webpack.config.js",
+    "deploy": "npm publish --access public"
+  },
+  "license": "Open BSV",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tonicpow/widget/"
+  },
+  "keywords": [
+    "tonic",
+    "tonicpow-js",
+    "tonicpow",
+    "embed",
+    "bitcoin",
+    "bsv"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.0",
+    "webpack": "^5.2.0",
+    "webpack-cli": "^4.1.0"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "bin": {
+    "tonic-js": "dist/widget.js"
+  },
+  "engines": {
+    "node": "*"
+  }
+}
