@@ -19,12 +19,12 @@
 - [License](#license)
 
 ## Installation
-1. Add the script to your web application (using our CDN hosting)
+1. Add the script to your web application
 ```html
 <script src="https://tonicpow.com/widget.js"></script>
 ```
 
-2. Insert the widget embed from your [TonicPow](https://tonicpow.com) account:
+2. Insert the widget from your [TonicPow](https://tonicpow.com) account:
 ```html
 <div class="tonicpow-widget" data-widget-id="your-widget-id-here"></div>
 ```
