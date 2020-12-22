@@ -1,6 +1,6 @@
-const environmentProduction = 'production'
-const environmentStaging = 'staging'
-const environmentLocal = 'local'
+const environmentLocal = 'local';
+const environmentStaging = 'staging';
+const environmentProduction = 'production';
 
 const Config = {
   apiUrl: 'https://api.tonicpow.com',
@@ -9,45 +9,43 @@ const Config = {
   apiUrlProduction: 'https://api.tonicpow.com',
   customEnvironment: 'data-environment',
   environment: environmentProduction,
-  environmentLocal: environmentLocal,
-  environmentProduction: environmentProduction,
-  environments: [environmentProduction, environmentStaging, environmentLocal],
-  environmentStaging: environmentStaging,
+  environmentLocal,
+  environmentStaging,
+  environmentProduction,
+  environments: [environmentLocal, environmentStaging, environmentProduction],
   maxSessionDays: 60,
   sessionName: 'tncpw_session',
   version: 'v0.0.1',
   widgetDivClass: 'tonicpow-widget',
-  widgetId: 'data-widget-id'
-}
+  widgetId: 'data-widget-id',
+};
 
 // isEnvironmentValid will check if the given environment is valid
-Config.isEnvironmentValid = (environment) => {
-  return Config.environments.indexOf(environment) >= 0
-}
+Config.isEnvironmentValid = (environment) => Config.environments.includes(environment);
 
 // setEnvironment will set the environment
 Config.setEnvironment = (environment) => {
   // No environment set? use the default
   if (!environment) {
-    return
+    return;
   }
 
   // Not a valid environment?
   if (!Config.isEnvironmentValid(environment)) {
-    return
+    return;
   }
 
   // Set the environment
-  Config.environment = environment
+  Config.environment = environment;
 
   // Set the API url
   if (environment === Config.environmentStaging) {
-    Config.apiUrl = Config.apiUrlStaging
+    Config.apiUrl = Config.apiUrlStaging;
   } else if (environment === Config.environmentLocal) {
-    Config.apiUrl = Config.apiUrlLocal
+    Config.apiUrl = Config.apiUrlLocal;
   } else if (environment === Config.environmentProduction) {
-    Config.apiUrl = Config.apiUrlProduction
+    Config.apiUrl = Config.apiUrlProduction;
   }
-}
+};
 
-export default Config
+export default Config;
