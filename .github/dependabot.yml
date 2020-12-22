@@ -1,4 +1,4 @@
-# Basic dependabot.yml to update gomod
+# Basic dependabot.yml to update npm
 
 version: 2
 updates:
@@ -7,7 +7,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-      # Check for npm updates at 9am UTC (5am EST)
+      # Check for npm updates at 10am UTC (5am EST)
       time: "10:00"
     reviewers:
       - "mrz1836"
