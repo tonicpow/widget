@@ -30,6 +30,7 @@ build: ## Builds the package for web distribution
 	@npm run build
 
 clean: ## Remove previous builds and any test cache data
+	@npm run clean
 	@if [ -d $(DISTRIBUTIONS_DIR) ]; then rm -r $(DISTRIBUTIONS_DIR); fi
 	@if [ -d build ]; then rm -r build; fi
 	@if [ -d build_cache ]; then rm -r build_cache; fi
@@ -43,3 +44,9 @@ lint: ## Runs the standard-js lint tool
 
 outdated: ## Checks for outdated packages via npm
 	@npm outdated
+
+release:: ## Deploy to npm
+	@npm run deploy
+
+test: ## Runs all tests
+	@npm run test
