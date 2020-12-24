@@ -21,7 +21,7 @@
 ## Installation
 1. Add the script to your web application
 ```html
-<script src="https://tonicpow.com/widget.js"></script>
+<script src="https://tonicpow.com/scripts/widget.js"></script>
 ```
 
 2. Insert the widget from your [TonicPow](https://tonicpow.com) account:
