@@ -1,3 +1,5 @@
+import Config from './config';
+
 const Events = {};
 
 let session = null;
@@ -16,7 +18,7 @@ Events.sendEvent = async (eventName, data) => {
     console.error('You must call init with a session before sending events');
     return;
   }
-  await fetch(`http://localhost:3002/v1/widgets/event?eventName=${eventName}&session=${session}&data=${data}`, { method: 'get' });
+  await fetch(`${Config.eventsUrl}/v1/widgets/event?eventName=${eventName}&session=${session}&data=${data}`, { method: 'get' });
 };
 
 Events.detectBounce = () => {

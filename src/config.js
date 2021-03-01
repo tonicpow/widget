@@ -7,8 +7,10 @@ const Config = {
   apiUrlLocal: 'http://localhost:3000',
   apiUrlStaging: 'https://api.staging.tonicpow.com',
   apiUrlProduction: 'https://api.tonicpow.com',
-  webserverUrlStaging: 'https://api.staging.tonicpow.com',
-  webserverUrlProduction: 'https://api.staging.tonicpow.com',
+  eventsUrl: 'https://webserver.tonicpow.com',
+  eventsUrlLocal: 'http://localhost:3002',
+  eventsUrlStaging: 'https://api.staging.tonicpow.com',
+  eventsUrlProduction: 'https://api.staging.tonicpow.com',
   customEnvironment: 'data-environment',
   environment: environmentProduction,
   environmentLocal,
@@ -43,10 +45,13 @@ Config.setEnvironment = (environment) => {
   // Set the API url
   if (environment === Config.environmentStaging) {
     Config.apiUrl = Config.apiUrlStaging;
+    Config.eventsUrl = Config.eventsUrlStaging;
   } else if (environment === Config.environmentLocal) {
     Config.apiUrl = Config.apiUrlLocal;
+    Config.eventsUrl = Config.eventsUrlLocal;
   } else if (environment === Config.environmentProduction) {
     Config.apiUrl = Config.apiUrlProduction;
+    Config.eventsUrl = Config.eventsUrlProduction;
   }
 };
 
