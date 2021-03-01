@@ -43,14 +43,14 @@
     "bsv"
   ],
   "devDependencies": {
-    "chai": "^4.2.0",
-    "eslint": "^7.16.0",
+    "chai": "^4.3.0",
+    "eslint": "^7.21.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "jsdom": "16.4.0",
     "jsdom-global": "3.0.2",
-    "mocha": "^8.2.0",
-    "webpack": "^5.11.0",
+    "mocha": "^8.3.0",
+    "webpack": "^5.24.2",
     "webpack-cli": "^4.5.0"
   },
   "files": [

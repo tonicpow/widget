@@ -15,7 +15,7 @@ const Config = {
   environments: [environmentLocal, environmentStaging, environmentProduction],
   maxSessionDays: 60,
   sessionName: 'tncpw_session',
-  version: 'v0.0.1',
+  version: 'v0.0.4',
   widgetDivClass: 'tonicpow-widget',
   widgetId: 'data-widget-id',
 };
