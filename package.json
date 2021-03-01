@@ -1,6 +1,6 @@
 {
   "name": "@tonicpow/widget",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "TonicPow Widget helps manage visitor sessions and load any TonicPow Widgets",
   "main": "dist/widget.js",
   "author": {
@@ -26,7 +26,7 @@
     "lint": "eslint --fix src/** && eslint --fix test/**.js",
     "test": "mocha -r jsdom-global/register",
     "clean": "rimraf ./dist/*",
-    "build": "npm run clean && npm run lint && webpack --config webpack.config.js && npm run test",
+    "build": "npm run clean && npm run lint && webpack --config webpack.config.js",
     "deploy": "npm publish --access public"
   },
   "license": "Open BSV",
@@ -42,7 +42,6 @@
     "bitcoin",
     "bsv"
   ],
-  "dependencies": {},
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^7.16.0",
