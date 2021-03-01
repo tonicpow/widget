@@ -23,7 +23,7 @@
   },
   "homepage": "https://docs.tonicpow.com",
   "scripts": {
-    "lint": "eslint --fix 'src/**' && eslint --fix 'test/**.js'",
+    "lint": "eslint --fix src/** && eslint --fix test/**.js",
     "test": "mocha -r jsdom-global/register",
     "clean": "rimraf ./dist/*",
     "build": "npm run clean && npm run lint && webpack --config webpack.config.js && npm run test",
