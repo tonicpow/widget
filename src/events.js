@@ -34,8 +34,8 @@ Events.detectInteraction = () => {
   document.addEventListener('mousedown', async () => {
     if (!interactionSent) {
       try {
-        await Events.sendEvent('interaction', 'mousedown');
         interactionSent = true;
+        await Events.sendEvent('interaction', 'mousedown');
       } catch (e) {
         console.error('Failed to report interaction', e);
       }
@@ -45,8 +45,8 @@ Events.detectInteraction = () => {
   document.addEventListener('scroll', async () => {
     if (!interactionSent) {
       try {
-        await Events.sendEvent('interaction', 'scroll');
         interactionSent = true;
+        await Events.sendEvent('interaction', 'scroll');
       } catch (e) {
         console.error('Failed to report interaction', e);
       }
@@ -56,8 +56,8 @@ Events.detectInteraction = () => {
   document.addEventListener('keypress', async () => {
     if (!interactionSent) {
       try {
-        await Events.sendEvent('interaction', 'keypress');
         interactionSent = true;
+        await Events.sendEvent('interaction', 'keypress');
       } catch (e) {
         console.error('Failed to report interaction', e);
       }
@@ -67,8 +67,8 @@ Events.detectInteraction = () => {
   document.addEventListener('click', async () => {
     if (!interactionSent) {
       try {
-        await Events.sendEvent('interaction', 'click');
         interactionSent = true;
+        await Events.sendEvent('interaction', 'click');
       } catch (e) {
         console.error('Failed to report interaction', e);
       }
