@@ -1,6 +1,6 @@
 {
   "name": "@tonicpow/widget",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "TonicPow Widget helps manage visitor sessions and load any TonicPow Widgets",
   "main": "dist/widget.js",
   "author": {
