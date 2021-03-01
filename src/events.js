@@ -1,11 +1,11 @@
+const Events = {};
+
+let session = null;
+
 // Remember when we started
 const start = new Date().getTime();
 
-const Events = {};
-let session = null;
-
 Events.init = (tncpwSession) => {
-  console.log('init', tncpwSession);
   session = tncpwSession;
   Events.detectInteraction();
   Events.detectBounce();
@@ -14,6 +14,7 @@ Events.init = (tncpwSession) => {
 Events.sendEvent = async (eventName, data) => {
   if (!session) {
     console.error('You must call init with a session before sending events');
+    return;
   }
   await fetch(`http://localhost:3002/v1/widgets/event?eventName=${eventName}&session=${session}&data=${data}`, { method: 'get' });
 };
@@ -29,10 +30,9 @@ Events.detectInteraction = () => {
   let interactionSent = false;
 
   document.addEventListener('mousedown', async () => {
-    console.log('mouse down', interactionSent);
     if (!interactionSent) {
       try {
-        await Events.sendEvent('interaction');
+        await Events.sendEvent('interaction', 'mousedown');
         interactionSent = true;
       } catch (e) {
         console.error('Failed to report interaction', e);
@@ -41,10 +41,9 @@ Events.detectInteraction = () => {
   });
 
   document.addEventListener('scroll', async () => {
-    console.log('scroll', interactionSent);
     if (!interactionSent) {
       try {
-        await Events.sendEvent('interaction');
+        await Events.sendEvent('interaction', 'scroll');
         interactionSent = true;
       } catch (e) {
         console.error('Failed to report interaction', e);
@@ -52,25 +51,27 @@ Events.detectInteraction = () => {
     }
   });
 
-  // $(this).mousemove(function () {
-  //     reset();
-  // });
+  document.addEventListener('keypress', async () => {
+    if (!interactionSent) {
+      try {
+        await Events.sendEvent('interaction', 'keypress');
+        interactionSent = true;
+      } catch (e) {
+        console.error('Failed to report interaction', e);
+      }
+    }
+  });
 
-  // $(this).scroll(function () {
-  //     reset();
-  // });
-
-  // $(this).mouseup(function () {
-  //     reset();
-  // });
-
-  // $(this).click(function () {
-  //     reset();
-  // });
-
-// $(this).keypress(function () {
-//     reset();
-// });
+  document.addEventListener('click', async () => {
+    if (!interactionSent) {
+      try {
+        await Events.sendEvent('interaction', 'click');
+        interactionSent = true;
+      } catch (e) {
+        console.error('Failed to report interaction', e);
+      }
+    }
+  });
 };
 
 export default Events;

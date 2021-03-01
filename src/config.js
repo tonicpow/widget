@@ -7,6 +7,8 @@ const Config = {
   apiUrlLocal: 'http://localhost:3000',
   apiUrlStaging: 'https://api.staging.tonicpow.com',
   apiUrlProduction: 'https://api.tonicpow.com',
+  webserverUrlStaging: 'https://api.staging.tonicpow.com',
+  webserverUrlProduction: 'https://api.staging.tonicpow.com',
   customEnvironment: 'data-environment',
   environment: environmentProduction,
   environmentLocal,
@@ -15,7 +17,7 @@ const Config = {
   environments: [environmentLocal, environmentStaging, environmentProduction],
   maxSessionDays: 60,
   sessionName: 'tncpw_session',
-  version: 'v0.0.4',
+  version: 'v0.0.5',
   widgetDivClass: 'tonicpow-widget',
   widgetId: 'data-widget-id',
 };
