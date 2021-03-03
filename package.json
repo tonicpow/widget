@@ -1,8 +1,8 @@
 {
   "name": "@tonicpow/widget",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "TonicPow Widget helps manage visitor sessions and load any TonicPow Widgets",
-  "main": "dist/widget.js",
+  "main": "dist/tonicpow.js",
   "author": {
     "name": "TonicPow",
     "email": "support@tonicpow.com",
@@ -58,7 +58,7 @@
     "dist/*"
   ],
   "bin": {
-    "tonic-js": "dist/widget.js"
+    "tonic-js": "dist/tonicpow.js"
   },
   "engines": {
     "node": "*"
