@@ -1,5 +1,5 @@
 const { assert } = require('chai');
-// eslint-disable-next-line import/no-unresolved
+
 require('../dist/widget');
 
 describe('TonicPow.js loaded', () => {

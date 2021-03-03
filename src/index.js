@@ -1,10 +1,11 @@
 import Config from './config';
-import Storage from './storage';
 import Events from './events';
+import Storage from './storage';
 
 // Start the TonicPow service and load modules
 const TonicPow = {
   Config,
+  Events,
   Storage,
 };
 
