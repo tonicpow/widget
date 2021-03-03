@@ -7,7 +7,7 @@
 [![Build Status](https://img.shields.io/github/workflow/status/tonicpow/widget/widget-ci?logo=github&v=5)](https://github.com/tonicpow/widget/actions)
 [![Sponsor](https://img.shields.io/badge/sponsor-TonicPow-181717.svg?logo=github&style=flat&v=1)](https://github.com/sponsors/TonicPow)
 [![slack](https://img.shields.io/badge/slack-tonicpow-orange.svg?style=flat&v=1)](https://atlantistic.slack.com/app_redirect?channel=tonicpow)
-[![app health](https://img.shields.io/website-up-down-green-red/https/tonicpow.com.svg?label=status&v=1)](https://tonicpow.com/)
+[![npm](https://img.shields.io/npm/v/@tonicpow/widget?v=1)](https://www.npmjs.com/package/@tonicpow/widget)
 
 ## Table of Contents
 - [Installation](#installation)
@@ -22,7 +22,7 @@
 ## Installation
 1. Add the script to your web application
 ```html
-<script src="https://tonicpow.com/scripts/widget.js"></script>
+<script src="https://tonicpow.com/scripts/tonicpow.js"></script>
 ```
 
 2. Insert the widget from your [TonicPow](https://tonicpow.com) account:
