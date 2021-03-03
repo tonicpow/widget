@@ -33,7 +33,15 @@ Storage.getStorage = (key) => {
   const now = Date.now();
 
   // Set expiration for storage
-  let expires = localStorage.getItem(`${key}_expires`);
+  let expires;
+
+  try {
+    expires = localStorage.getItem(`${key}_expires`);
+  } catch (e) {
+    console.log(`getItem: error getting localStorage: ${JSON.stringify(e)}`);
+    return null;
+  }
+
   if (expires === undefined || expires === null) {
     expires = 0;
   }

@@ -1,5 +1,6 @@
 import Config from './config';
 import Storage from './storage';
+import Events from './events';
 
 // Start the TonicPow service and load modules
 const TonicPow = {
@@ -100,6 +101,12 @@ TonicPow.load = () => {
 
   // Process visitor token
   TonicPow.captureVisitorSession();
+
+  // Capture events
+  const session = TonicPow.getVisitorSession();
+  if (session) {
+    Events.init(session);
+  }
 };
 
 // Load the TonicPow widget

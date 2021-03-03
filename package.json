@@ -1,6 +1,6 @@
 {
   "name": "@tonicpow/widget",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "TonicPow Widget helps manage visitor sessions and load any TonicPow Widgets",
   "main": "dist/widget.js",
   "author": {
@@ -23,10 +23,10 @@
   },
   "homepage": "https://docs.tonicpow.com",
   "scripts": {
-    "lint": "eslint --fix 'src/**' && eslint --fix 'test/**.js'",
-    "test": "mocha -r jsdom-global/register",
+    "lint": "eslint --fix src/** && eslint --fix test/**.js",
+    "test": "mocha --require jsdom-global/register --require mock-local-storage",
     "clean": "rimraf ./dist/*",
-    "build": "npm run clean && npm run lint && webpack --config webpack.config.js && npm run test",
+    "build": "npm run clean && npm run lint && webpack --config webpack.config.js",
     "deploy": "npm publish --access public"
   },
   "license": "Open BSV",
@@ -43,14 +43,15 @@
     "bsv"
   ],
   "devDependencies": {
-    "chai": "^4.3.0",
+    "chai": "^4.3.3",
     "eslint": "^7.21.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "jsdom": "16.4.0",
     "jsdom-global": "3.0.2",
     "mocha": "^8.3.0",
-    "webpack": "^5.24.2",
+    "mock-local-storage": "^1.1.17",
+    "webpack": "^5.24.3",
     "webpack-cli": "^4.5.0"
   },
   "files": [
