@@ -2,25 +2,33 @@ import Config from './config';
 
 const Events = {};
 
+// Set the current session
 let session = null;
 
 // Remember when we started
 const start = new Date().getTime();
 
+// Sets the session and starts detecting interactions & bounce
 Events.init = (tncpwSession) => {
   session = tncpwSession;
   Events.detectInteraction();
   Events.detectBounce();
 };
 
+// Send event will send an event to TonicPow
 Events.sendEvent = async (eventName, data) => {
   if (!session) {
-    console.error('You must call init with a session before sending events');
+    console.info('you must call init with a session before sending events');
     return;
   }
-  await fetch(`${Config.eventsUrl}/v1/widgets/event?eventName=${eventName}&session=${session}&data=${data}`, { method: 'get' });
+  // todo: obfuscate the url params (change to payload of JSON?)
+  await fetch(
+    `${Config.eventsUrl}/v1/events?v=${Config.version}&name=${eventName}&tncpw_session=${session}&data=${data}`,
+    { method: 'get' },
+  );
 };
 
+// Detects a bounce event
 Events.detectBounce = () => {
   window.onbeforeunload = () => {
     // Calculate time on page
@@ -28,16 +36,17 @@ Events.detectBounce = () => {
   };
 };
 
+// Detects a page interaction
 Events.detectInteraction = () => {
   let interactionSent = false;
 
   document.addEventListener('mousedown', async () => {
     if (!interactionSent) {
       try {
-        interactionSent = true;
         await Events.sendEvent('interaction', 'mousedown');
+        interactionSent = true;
       } catch (e) {
-        console.error('Failed to report interaction', e);
+        console.error('failed to report interaction: mousedown', e);
       }
     }
   });
@@ -45,10 +54,10 @@ Events.detectInteraction = () => {
   document.addEventListener('scroll', async () => {
     if (!interactionSent) {
       try {
-        interactionSent = true;
         await Events.sendEvent('interaction', 'scroll');
+        interactionSent = true;
       } catch (e) {
-        console.error('Failed to report interaction', e);
+        console.error('failed to report interaction: scroll', e);
       }
     }
   });
@@ -56,10 +65,10 @@ Events.detectInteraction = () => {
   document.addEventListener('keypress', async () => {
     if (!interactionSent) {
       try {
-        interactionSent = true;
         await Events.sendEvent('interaction', 'keypress');
+        interactionSent = true;
       } catch (e) {
-        console.error('Failed to report interaction', e);
+        console.error('failed to report interaction: keypress', e);
       }
     }
   });
@@ -67,10 +76,10 @@ Events.detectInteraction = () => {
   document.addEventListener('click', async () => {
     if (!interactionSent) {
       try {
-        interactionSent = true;
         await Events.sendEvent('interaction', 'click');
+        interactionSent = true;
       } catch (e) {
-        console.error('Failed to report interaction', e);
+        console.error('failed to report interaction: click', e);
       }
     }
   });
