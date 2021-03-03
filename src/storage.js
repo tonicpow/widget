@@ -1,4 +1,4 @@
-const Storage = {};
+const Storage = {}
 
 /* global localStorage */
 
@@ -11,14 +11,16 @@ returns:
  */
 Storage.removeStorage = (name) => {
   try {
-    localStorage.removeItem(name);
-    localStorage.removeItem(`${name}_expiresIn`);
+    localStorage.removeItem(name)
+    localStorage.removeItem(`${name}_expiresIn`)
   } catch (e) {
-    console.log(`removeStorage: Error removing key [${name}] from localStorage: ${JSON.stringify(e)}`);
-    return false;
+    console.log(
+      `removeStorage: Error removing key [${name}] from localStorage: ${JSON.stringify(e)}`
+    )
+    return false
   }
-  return true;
-};
+  return true
+}
 
 /*
 getStorage: retrieves a key from localStorage previously set with setStorage().
@@ -30,36 +32,36 @@ returns:
  */
 Storage.getStorage = (key) => {
   // epoch time, lets deal only with integer
-  const now = Date.now();
+  const now = Date.now()
 
   // Set expiration for storage
-  let expires;
+  let expires
 
   try {
-    expires = localStorage.getItem(`${key}_expires`);
+    expires = localStorage.getItem(`${key}_expires`)
   } catch (e) {
-    console.log(`getItem: error getting localStorage: ${JSON.stringify(e)}`);
-    return null;
+    console.log(`getItem: error getting localStorage: ${JSON.stringify(e)}`)
+    return null
   }
 
   if (expires === undefined || expires === null) {
-    expires = 0;
+    expires = 0
   }
 
   // Expired
   if (expires < now) {
-    Storage.removeStorage(key);
-    return null;
+    Storage.removeStorage(key)
+    return null
   }
 
   // Get the existing item
   try {
-    return localStorage.getItem(key);
+    return localStorage.getItem(key)
   } catch (e) {
-    console.log(`getStorage: Error reading key [${key}] from localStorage: ${JSON.stringify(e)}`);
-    return null;
+    console.log(`getStorage: Error reading key [${key}] from localStorage: ${JSON.stringify(e)}`)
+    return null
   }
-};
+}
 
 /*
 setStorage: writes a key into localStorage setting a expire time
@@ -73,22 +75,22 @@ returns:
 Storage.setStorage = (key, value, expires = null) => {
   // Expired time
   if (expires) {
-    expires = Math.abs(expires); // make sure it's positive
+    expires = Math.abs(expires) // make sure it's positive
   } else {
-    expires = (24 * 60 * 60); // default: seconds for 1 day
+    expires = 24 * 60 * 60 // default: seconds for 1 day
   }
 
   // Milli seconds since epoch time, lets deal only with integer
-  const now = Date.now();
-  const schedule = now + expires * 1000;
+  const now = Date.now()
+  const schedule = now + expires * 1000
   try {
-    localStorage.setItem(key, value);
-    localStorage.setItem(`${key}_expires`, schedule.toString());
+    localStorage.setItem(key, value)
+    localStorage.setItem(`${key}_expires`, schedule.toString())
   } catch (e) {
-    console.log(`setStorage: Error setting key [${key}] in localStorage: ${JSON.stringify(e)}`);
-    return false;
+    console.log(`setStorage: Error setting key [${key}] in localStorage: ${JSON.stringify(e)}`)
+    return false
   }
-  return true;
-};
+  return true
+}
 
-export default Storage;
+export default Storage

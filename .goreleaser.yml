@@ -8,7 +8,7 @@ before:
     # run make
     #- make test
 snapshot:
-  name_template: "{{ .Tag }}"
+  name_template: '{{ .Tag }}'
 changelog:
   sort: asc
   filters:
@@ -26,4 +26,4 @@ build:
 # ---------------------------
 release:
   prerelease: true
-  name_template: "Release v{{.Version}}"
+  name_template: 'Release v{{.Version}}'
