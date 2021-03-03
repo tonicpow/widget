@@ -9,10 +9,6 @@ const TonicPow = {
   Storage,
 }
 
-// Load modules
-// TonicPow.Config = Config;
-// TonicPow.Storage = Storage;
-
 // setOreo for creating new oreos
 TonicPow.setOreo = (name, value, days) => {
   const date = new Date()
