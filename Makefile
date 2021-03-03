@@ -21,7 +21,7 @@ ifndef REPO_BRANCH
 	override REPO_BRANCH="master"
 endif
 
-.PHONY: clean release
+.PHONY: clean release test
 
 audit: ## Checks for vulnerabilities in dependencies
 	@npm audit
