@@ -99,8 +99,8 @@ TonicPow.load = () => {
   // Process visitor token
   TonicPow.captureVisitorSession()
 
-  // Capture events
-  const session = TonicPow.getVisitorSession()
+  // Capture events if we have a session
+  const session = TonicPow.getVisitorSession();
   if (session) {
     Events.init(session)
   }

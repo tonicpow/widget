@@ -62,7 +62,7 @@
     "dist/*"
   ],
   "bin": {
-    "tonic-js": "dist/widget.js"
+    "tonic-js": "dist/tonicpow.js"
   },
   "engines": {
     "node": "*"
