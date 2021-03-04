@@ -1,7 +1,7 @@
 {
   "name": "@tonicpow/widget",
   "version": "0.0.7",
-  "description": "TonicPow Widget helps manage visitor sessions and load any TonicPow Widgets",
+  "description": "TonicPow helps manage visitor sessions, loads any TonicPow Widgets, and fires events.",
   "main": "dist/tonicpow.js",
   "author": {
     "name": "TonicPow",
@@ -45,12 +45,16 @@
   "devDependencies": {
     "chai": "^4.3.3",
     "eslint": "^7.21.0",
-    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.22.1",
+    "husky": "^5.1.3",
     "jsdom": "16.4.0",
     "jsdom-global": "3.0.2",
+    "lint-staged": "^10.5.4",
     "mocha": "^8.3.0",
     "mock-local-storage": "^1.1.17",
+    "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0",
     "webpack": "^5.24.3",
     "webpack-cli": "^4.5.0"
   },
@@ -62,5 +66,22 @@
   },
   "engines": {
     "node": "*"
+  },
+  "dependencies": {
+    "eslint-plugin-prettier": "^3.3.1"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "printWidth": 100,
+    "semi": false
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   }
 }

@@ -2,17 +2,17 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    target-branch: "master"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    target-branch: 'master'
+    directory: '/'
     schedule:
-      interval: "daily"
+      interval: 'daily'
       # Check for npm updates at 10am UTC (5am EST)
-      time: "10:00"
+      time: '10:00'
     reviewers:
-      - "mrz1836"
+      - 'mrz1836'
     assignees:
-      - "mrz1836"
+      - 'mrz1836'
     # Labels must be created first
     labels:
-      - "update"
+      - 'update'

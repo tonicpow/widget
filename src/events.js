@@ -1,19 +1,19 @@
-import Config from './config';
+import Config from './config'
 
-const Events = {};
+const Events = {}
 
 // Set the current session
 let session = null;
 
 // Remember when we started
-const start = new Date().getTime();
+const start = new Date().getTime()
 
 // Sets the session and starts detecting interactions & bounce
 Events.init = (tncpwSession) => {
-  session = tncpwSession;
-  Events.detectInteraction();
-  Events.detectBounce();
-};
+  session = tncpwSession
+  Events.detectInteraction()
+  Events.detectBounce()
+}
 
 // Send event will send an event to TonicPow
 Events.sendEvent = async (eventName, data) => {
@@ -32,13 +32,13 @@ Events.sendEvent = async (eventName, data) => {
 Events.detectBounce = () => {
   window.onbeforeunload = () => {
     // Calculate time on page
-    Events.sendEvent('bounce', new Date().getTime() - start);
-  };
-};
+    Events.sendEvent('bounce', new Date().getTime() - start)
+  }
+}
 
 // Detects a page interaction
 Events.detectInteraction = () => {
-  let interactionSent = false;
+  let interactionSent = false
 
   document.addEventListener('mousedown', async () => {
     if (!interactionSent) {
@@ -49,7 +49,7 @@ Events.detectInteraction = () => {
         console.error('failed to report interaction: mousedown', e);
       }
     }
-  });
+  })
 
   document.addEventListener('scroll', async () => {
     if (!interactionSent) {
@@ -60,7 +60,7 @@ Events.detectInteraction = () => {
         console.error('failed to report interaction: scroll', e);
       }
     }
-  });
+  })
 
   document.addEventListener('keypress', async () => {
     if (!interactionSent) {
@@ -71,7 +71,7 @@ Events.detectInteraction = () => {
         console.error('failed to report interaction: keypress', e);
       }
     }
-  });
+  })
 
   document.addEventListener('click', async () => {
     if (!interactionSent) {
@@ -82,7 +82,7 @@ Events.detectInteraction = () => {
         console.error('failed to report interaction: click', e);
       }
     }
-  });
-};
+  })
+}
 
-export default Events;
+export default Events

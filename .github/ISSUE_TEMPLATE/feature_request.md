@@ -4,7 +4,6 @@ about: Suggest an idea or feature for this project
 title: ''
 labels: idea
 assignees: mrz1836
-
 ---
 
 **Is your feature request related to a problem? Please describe.**
@@ -16,7 +15,7 @@ A clear and concise description of what you want to happen.
 **Describe alternatives you've considered**
 A clear and concise description of any alternative solutions or features you've considered.
 
-**Any supplemental graphics or designs***
+**Any supplemental graphics or designs\***
 If you have any sketches, designs, graphics, please attach them here.
 
 **Additional context**
