@@ -113,7 +113,7 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
 } else {
   // This loads if the <script> is hardcoded in the html page in the <head>
   document.addEventListener('DOMContentLoaded', () => {
-    TonicPow.load()
+    TonicPow.load();
   })
 }
 
