@@ -24,7 +24,7 @@
   "homepage": "https://docs.tonicpow.com",
   "scripts": {
     "lint": "eslint --fix src/** && eslint --fix test/**.js",
-    "test": "mocha --require jsdom-global/register --require mock-local-storage",
+    "test": "mocha --require jsdom-global/register",
     "clean": "rimraf ./dist/*",
     "build": "npm run clean && npm run lint && webpack --config webpack.config.js",
     "deploy": "npm publish --access public"
@@ -52,7 +52,6 @@
     "jsdom-global": "3.0.2",
     "lint-staged": "^10.5.4",
     "mocha": "^8.3.0",
-    "mock-local-storage": "^1.1.17",
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0",
     "webpack": "^5.24.3",
