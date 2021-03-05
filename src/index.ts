@@ -2,13 +2,30 @@ import Config from './config'
 import Events from './events'
 import Storage from './storage'
 
+// height: 250
+// image_url: "https://res.cloudinary.com/tonicpow/image/upload/c_crop,x_0,y_0,w_300,h_250/w_300,h_250,c_limit,g_center/v1606622248/ocwkfsjsb2hz2ostxydn.jpg"
+// link_url: "https://staging.tpow.app/c1d0f8c9"
+// title: "Something cool"
+// width: 300
+interface Widget {
+  height: number
+  image_url: string
+  link_url: string
+  title: string
+  width: number
+  id: number
+}
+
+// Options when creating a TonicPow instance
 interface TonicPowOptions {
   AutoInit: boolean // Manually initialize instead of auto-detecting divs
+  WidgetRequestCallback: (widget: Widget) => void
 }
 
 // Detault options
 const defaultOptions: TonicPowOptions = {
   AutoInit: true,
+  WidgetRequestCallback: (widget: Widget) => {},
 }
 
 export default class TonicPow {
@@ -46,13 +63,15 @@ export default class TonicPow {
     }
   }
 
-  // registerEvents
+  // registerEvents -Registers event listeners. Runs only once
   registerEvents = () => {
-    // Register events if we have a valid session
-    let session = this.getVisitorSession()
-    if (session) {
-      console.log('registering session', session)
-      this.events = new Events(session)
+    if (!this.events) {
+      // Register events if we have a valid session
+      let session = this.getVisitorSession()
+      if (session) {
+        console.log('registering session', session)
+        this.events = new Events(session)
+      }
     }
   }
 
@@ -115,13 +134,17 @@ export default class TonicPow {
       )
       const response = await promise.json()
 
+      // Fire callback
+      defaultOptions.WidgetRequestCallback(response as Widget)
+
       // Set URI encoded title
       const campaignTitle = encodeURIComponent(response.title)
 
       // Set the HTML
       tonicDiv.innerHTML = `
-    <a href="${response.link_url}?utm_source=tonicpow-widgets&utm_medium=widget&utm_campaign=${widgetId}&utm_content=${campaignTitle}">
+    <a href="${response.link_url}?utm_source=tonicpow-widgets&utm_medium=widget&utm_campaign=${widgetId}&utm_content=${campaignTitle}" style="display: block">
       <img src="${response.image_url}" 
+      id="${widgetId}"
       width="${response.width}" 
       height="${response.height}" 
       alt="${response.title}" />

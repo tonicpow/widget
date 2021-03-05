@@ -9,7 +9,12 @@
       let script = document.createElement('Script')
       script.src = '../../dist/tonicpow.js'
       script.onload = () => {
-        new TonicPow({ AutoInit: true })
+        new TonicPow({
+          AutoInit: true,
+          WidgetRequestCallback: (widget) => {
+            console.log('widget loaded!', widget)
+          },
+        })
       }
       document.head.appendChild(script)
     </script>
@@ -32,6 +37,7 @@
         class="tonicpow-widget"
         data-environment="staging"
         data-widget-id="ff83a7a74a6895f7929bfa1c185ac0a0f5d38e8e071ed3bcc008d8d15b6a6727"
+        style="display: inline-block"
       ></div>
     </div>
 

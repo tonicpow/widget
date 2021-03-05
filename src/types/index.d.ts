@@ -18,6 +18,7 @@ declare module TonicPow {
     start: number
     detectBounce: () => void
     detectInteraction: () => void
+    detectWidgetClick: () => void
     sendEvent: (eventName: string, data: string) => Promise<void>
   }
 

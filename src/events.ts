@@ -3,15 +3,39 @@ import Config from './config'
 export default class Events {
   sessionId: string
   start: number
+  interactionSent: boolean
 
   constructor(sessionId: string) {
     // Set the current session
     this.sessionId = sessionId
 
+    this.interactionSent = false
+
     // Remember when we started
     this.start = new Date().getTime()
     this.detectInteraction()
     this.detectBounce()
+    this.detectWidgetClick()
+  }
+
+  // Detects click on the widget
+  detectWidgetClick = () => {
+    document.addEventListener('click', async (e: Event) => {
+      e = e || window.event
+      var target = (e.target || e.srcElement) as HTMLDivElement
+      // Get container from the clicked element
+      let container = target?.parentElement?.parentElement
+      // Send only if widget image was clicked
+      if (container?.classList?.contains('tonicpow-widget')) {
+        try {
+          // Keepo this above send to prevent sending mousedown AND click on initial interaction
+          this.interactionSent = true
+          await this.sendEvent('interaction', 'click')
+        } catch (e) {
+          console.error('failed to report interaction: click', e)
+        }
+      }
+    })
   }
 
   // Detects a bounce event
@@ -24,13 +48,11 @@ export default class Events {
 
   // Detects a page interaction
   detectInteraction = () => {
-    let interactionSent = false
-
     document.addEventListener('mousedown', async () => {
-      if (!interactionSent) {
+      if (!this.interactionSent) {
         try {
           await this.sendEvent('interaction', 'mousedown')
-          interactionSent = true
+          this.interactionSent = true
         } catch (e) {
           console.error('failed to report interaction: mousedown', e)
         }
@@ -38,10 +60,10 @@ export default class Events {
     })
 
     document.addEventListener('scroll', async () => {
-      if (!interactionSent) {
+      if (!this.interactionSent) {
         try {
           await this.sendEvent('interaction', 'scroll')
-          interactionSent = true
+          this.interactionSent = true
         } catch (e) {
           console.error('failed to report interaction: scroll', e)
         }
@@ -49,23 +71,12 @@ export default class Events {
     })
 
     document.addEventListener('keypress', async () => {
-      if (!interactionSent) {
+      if (!this.interactionSent) {
         try {
           await this.sendEvent('interaction', 'keypress')
-          interactionSent = true
+          this.interactionSent = true
         } catch (e) {
           console.error('failed to report interaction: keypress', e)
-        }
-      }
-    })
-
-    document.addEventListener('click', async () => {
-      if (!interactionSent) {
-        try {
-          await this.sendEvent('interaction', 'click')
-          interactionSent = true
-        } catch (e) {
-          console.error('failed to report interaction: click', e)
         }
       }
     })
