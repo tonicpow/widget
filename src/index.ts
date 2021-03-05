@@ -32,22 +32,27 @@ export default class TonicPow {
   config: Config
   storage: Storage
   events: Events | undefined
+  options: TonicPowOptions
 
   constructor(options: TonicPowOptions = defaultOptions) {
+    this.options = options
+
     // Imbue options
     for (let [optionKey, optionVal] of Object.entries(options)) {
-      Object.defineProperty(this, optionKey, {
+      Object.defineProperty(this.options, optionKey, {
         value: optionVal,
         writable: false,
       })
     }
+
+    console.log('constructed', this)
 
     // Set namespaces
     this.config = new Config()
     this.storage = new Storage()
 
     // Start the TonicPow service and load modules
-    if (options.AutoInit) {
+    if (this.options.AutoInit) {
       // Load the TonicPow widget
       if (document.readyState === 'complete' || document.readyState === 'interactive') {
         // This loads if the <script> is dynamically injected into the page
@@ -135,7 +140,8 @@ export default class TonicPow {
       const response = await promise.json()
 
       // Fire callback
-      defaultOptions.WidgetRequestCallback(response as Widget)
+      console.log('firing callback')
+      this.options.WidgetRequestCallback(response as Widget)
 
       // Set URI encoded title
       const campaignTitle = encodeURIComponent(response.title)
