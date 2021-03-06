@@ -5,7 +5,7 @@ import Storage from './storage'
 import Widget from './types'
 
 interface TonicPowOptions {
-  widgetsChangedCallback: (widgetId: string, widget: typeof Widget) => void
+  widgetsChangedCallback: (widget: typeof Widget) => void
 }
 
 export default class TonicPow {
@@ -148,7 +148,8 @@ export default class TonicPow {
         this.widgets.set(widgetId, response as typeof Widget)
         // Annoying that this is needed but I can't effectively observe the map
         if (this.options && this.options.widgetsChangedCallback) {
-          this.options.widgetsChangedCallback(widgetId, response as typeof Widget)
+          response.id = widgetId
+          this.options.widgetsChangedCallback(response as typeof Widget)
         }
       } catch (e) {
         throw e
@@ -184,12 +185,7 @@ export default class TonicPow {
     }
   }
 }
-var tpow
-try {
-  tpow = new TonicPow()
-} catch (e) {
-  console.log('errrmagord', e)
-}
+var tpow = new TonicPow()
 
 ;(window as any).TonicPow = tpow || {}
 // Auto-load and set on window

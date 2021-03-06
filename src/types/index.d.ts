@@ -19,7 +19,7 @@ declare module TonicPow {
     link_url: string
     title: string
     width: number
-    id: number
+    id?: string
   }
 
   export const widgets: Map<string, Widget>
