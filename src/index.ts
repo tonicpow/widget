@@ -5,7 +5,7 @@ import Storage from './storage'
 import Widget from './types'
 
 interface TonicPowOptions {
-  widgetsChangedCallback: (widget: typeof Widget) => void
+  onWidgetLoaded: (widget: typeof Widget) => void
 }
 
 export default class TonicPow {
@@ -45,7 +45,7 @@ export default class TonicPow {
       let session = this.getVisitorSession()
       // TODO: Validate session here
       if (session && session.length) {
-        this.events = new Events(session)
+        this.events = new Events(session, this.config)
       }
     }
   }
@@ -94,18 +94,19 @@ export default class TonicPow {
 
       // Not sure why this is needed but encountered this in prod 3/5/2021 - luke
       if (!tonicDiv) {
+        console.log('exit early - remove this?')
         continue
       }
 
       // Get the widget id
-      const widgetId = tonicDiv.getAttribute(this.config.widgetId)
+      const widgetId = tonicDiv.getAttribute(this.config.widgetIdAttribute)
       if (!widgetId) {
         console.log(`${widgetId} not found`)
         continue
       }
 
       // Get the custom environment (switching away from default: production)
-      const customEnvironment = tonicDiv.getAttribute(this.config.customEnvironment)
+      const customEnvironment = tonicDiv.getAttribute(this.config.customEnvironmentAttribute)
       this.config.setEnvironment(customEnvironment || 'production')
 
       // Add to widgets map
@@ -118,6 +119,8 @@ export default class TonicPow {
         )
 
         var response
+
+        // Handle domain not allowed
         if (promise.status === 403) {
           console.info(`${promise.status}: Domain not allowed`)
           response = {
@@ -125,6 +128,7 @@ export default class TonicPow {
             image_url: fallbackImage,
           }
         } else {
+          // Get JSON response
           response = await promise.json()
         }
 
@@ -133,23 +137,24 @@ export default class TonicPow {
 
         // Set the HTML
         tonicDiv.innerHTML = `
-      <a href="${response.link_url}?utm_source=tonicpow-widgets&utm_medium=widget&utm_campaign=${widgetId}&utm_content=${campaignTitle}" style="display: block">
+      <a href="${response.link_url}?utm_source=tonicpow-widgets&utm_medium=widget&utm_campaign=${widgetId}&utm_content=${campaignTitle}" style="display: inline-block">
       <img src="${response.image_url}" 
-      id="${widgetId}"
       width="${response.width}" 
       height="${response.height}" 
       alt="${response.title}" />
       </a>`
-        // Set additional information
+
+        // Set widget dimesions
         tonicDiv.setAttribute('data-width', response.width)
         tonicDiv.setAttribute('data-height', response.height)
 
         // Add to widgets map
         this.widgets.set(widgetId, response as typeof Widget)
-        // Annoying that this is needed but I can't effectively observe the map
-        if (this.options && this.options.widgetsChangedCallback) {
+
+        // Fire onWidgetLoaded callback if provided
+        if (this.options && this.options.onWidgetLoaded) {
           response.id = widgetId
-          this.options.widgetsChangedCallback(response as typeof Widget)
+          this.options.onWidgetLoaded(response as typeof Widget)
         }
       } catch (e) {
         throw e
@@ -181,11 +186,12 @@ export default class TonicPow {
 
     // Capture events if we have a session
     if (session) {
-      this.events = new Events(session)
+      this.events = new Events(session, this.config)
     }
   }
 }
+
+// Auto-load and set on window
 var tpow = new TonicPow()
 
 ;(window as any).TonicPow = tpow || {}
-// Auto-load and set on window

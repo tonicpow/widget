@@ -4,10 +4,12 @@ export default class Events {
   sessionId: string
   start: number
   interactionSent: boolean
+  config: Config
 
-  constructor(sessionId: string) {
+  constructor(sessionId: string, config: Config) {
     // Set the current session
     this.sessionId = sessionId
+    this.config = config
 
     this.interactionSent = false
 
@@ -89,18 +91,15 @@ export default class Events {
       return
     }
 
-    // Get config
-    let config = new Config()
-
     // Package payload
     let payload = {
-      v: config.version,
+      v: this.config.version,
       name: eventName,
       tncpw_session: this.sessionId,
       data,
     }
 
-    await fetch(`${config.eventsUrl}/v1/events?d=${btoa(JSON.stringify(payload))}`, {
+    await fetch(`${this.config.eventsUrl}/v1/events?d=${btoa(JSON.stringify(payload))}`, {
       method: 'get',
     })
   }

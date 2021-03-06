@@ -10,14 +10,14 @@ export default class Config {
   eventsUrlLocal: string
   eventsUrlStaging: string
   eventsUrlProduction: string
-  customEnvironment: string
+  customEnvironmentAttribute: string
   environment: string
   environments: string[]
   maxSessionDays: number
   sessionName: string
   version: string
   widgetDivClass: string
-  widgetId: string
+  widgetIdAttribute: string
 
   constructor() {
     this.environmentLocal = 'local'
@@ -32,14 +32,14 @@ export default class Config {
     this.eventsUrlLocal = 'http://localhost:3002'
     this.eventsUrlStaging = 'https://events.staging.tonicpow.com'
     this.eventsUrlProduction = 'https://events.tonicpow.com'
-    this.customEnvironment = 'data-environment'
+    this.customEnvironmentAttribute = 'data-environment'
     this.environment = ''
     this.environments = [this.environmentLocal, this.environmentStaging, this.environmentProduction]
     this.maxSessionDays = 60
     this.sessionName = 'tncpw_session'
     this.version = 'v0.0.8'
     this.widgetDivClass = 'tonicpow-widget'
-    this.widgetId = 'data-widget-id'
+    this.widgetIdAttribute = 'data-widget-id'
   }
 
   // isEnvironmentValid will check if the given environment is valid
