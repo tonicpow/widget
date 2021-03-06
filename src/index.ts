@@ -4,17 +4,23 @@ import Events from './events'
 import Storage from './storage'
 import Widget from './types'
 
+interface TonicPowOptions {
+  widgetsChangedCallback: (widgetId: string, widget: typeof Widget) => void
+}
+
 export default class TonicPow {
   config: Config
   storage: Storage
   events: Events | undefined
   widgets: Map<String, typeof Widget | null>
+  options: TonicPowOptions | undefined
 
-  constructor() {
+  constructor(options?: TonicPowOptions) {
     // Set namespaces
     this.config = new Config()
     this.storage = new Storage()
     this.widgets = new Map<String, typeof Widget>()
+    this.options = options
 
     // Start the TonicPow service and load modules
 
@@ -113,7 +119,7 @@ export default class TonicPow {
 
         var response
         if (promise.status === 403) {
-          console.info(promise.status, ': Domain not allowed')
+          console.info(`${promise.status}: Domain not allowed`)
           response = {
             link_url: 'https://tonicpow.com',
             image_url: fallbackImage,
@@ -140,6 +146,10 @@ export default class TonicPow {
 
         // Add to widgets map
         this.widgets.set(widgetId, response as typeof Widget)
+        // Annoying that this is needed but I can't effectively observe the map
+        if (this.options && this.options.widgetsChangedCallback) {
+          this.options.widgetsChangedCallback(widgetId, response as typeof Widget)
+        }
       } catch (e) {
         throw e
       }
