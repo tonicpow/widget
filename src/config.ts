@@ -14,7 +14,8 @@ export default class Config {
   environment: string
   environments: string[]
   maxSessionDays: number
-  sessionName: string
+  challengeParameterName: string
+  sessionParameterName: string
   version: string
   widgetDivClass: string
   widgetIdAttribute: string
@@ -44,7 +45,8 @@ export default class Config {
     this.environment = ''
     this.environments = [this.environmentLocal, this.environmentStaging, this.environmentProduction]
     this.maxSessionDays = 60
-    this.sessionName = 'tncpw_session'
+    this.sessionParameterName = 'tncpw_session'
+    this.challengeParameterName = 'tncpw_challenge'
     this.version = 'v0.0.8'
     this.widgetDivClass = 'tonicpow-widget'
     this.widgetIdAttribute = 'data-widget-id'

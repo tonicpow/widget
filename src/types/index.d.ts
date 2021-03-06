@@ -3,15 +3,21 @@ declare module TonicPow {
   export const events: Events
   export const storage: Storage
 
-  export const sessionId: string | null
   export const start: number
+
+  export const sessionId: string | null
+
+  export interface Capture {
+    sessionId: string | null
+    challengeGuid: string | null
+  }
 
   export function setOreo(name: string, value: string, days: number): void
   export function captureVisitorSession(customSessionId: string): string | null
   export function getVisitorSession(): string | null
   export function loadDivs(): Promise<void>
   export function load(): Promise<void>
-  export function captureVisitorSession(): void
+  export function captureVisitorSession(): Capture
 
   export interface Widget {
     height: number

@@ -5,19 +5,25 @@ export default class Events {
   start: number
   interactionSent: boolean
   config: Config
+  challengeGuid: string
 
-  constructor(sessionId: string, config: Config) {
+  constructor(sessionId: string = '', challengeGuid: string = '', config: Config) {
     // Set the current session
     this.sessionId = sessionId
     this.config = config
+    this.challengeGuid = challengeGuid
 
     this.interactionSent = false
-
-    // Remember when we started
     this.start = new Date().getTime()
-    this.detectInteraction()
-    this.detectBounce()
-    this.detectWidgetClick()
+
+    if (this.challengeGuid && this.challengeGuid.length > 0) {
+      this.sendChallengeResponse()
+    } else {
+      // Remember when we started
+      this.detectInteraction()
+      this.detectBounce()
+      this.detectWidgetClick()
+    }
   }
 
   // Detects click on the widget
@@ -45,6 +51,15 @@ export default class Events {
     window.onbeforeunload = () => {
       // Calculate time on page
       this.sendEvent('bounce', (new Date().getTime() - this.start).toString())
+    }
+  }
+
+  // Sends a challenge response
+  sendChallengeResponse = () => {
+    try {
+      this.sendEvent('challenge', this.challengeGuid)
+    } catch (e) {
+      console.error('Failed to send challenge response', e)
     }
   }
 
@@ -86,17 +101,28 @@ export default class Events {
 
   // Send event will send an event to TonicPow
   sendEvent = async (eventName: string, data: string) => {
-    if (!this.sessionId) {
+    if (!this.sessionId && !this.challengeGuid) {
       console.info('you must call init with a session before sending events')
       return
     }
+
+    // Get origin
+    let location = window.location.href
 
     // Package payload
     let payload = {
       v: this.config.version,
       name: eventName,
-      tncpw_session: this.sessionId,
+      location,
       data,
+    } as any
+
+    if (this.challengeGuid) {
+      payload.tncpw_challenge = this.challengeGuid
+    }
+
+    if (this.sessionId) {
+      payload.tncpw_session = this.sessionId
     }
 
     await fetch(`${this.config.eventsUrl}/v1/events?d=${btoa(JSON.stringify(payload))}`, {

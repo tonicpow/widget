@@ -27,25 +27,11 @@ export default class TonicPow {
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
       // This loads if the <script> is dynamically injected into the page
       this.load()
-      this.registerEvents()
     } else {
       // This loads if the <script> is hardcoded in the html page in the <head>
       document.addEventListener('DOMContentLoaded', () => {
         this.load()
-        this.registerEvents()
       })
-    }
-  }
-
-  // registerEvents -Registers event listeners. Runs only once
-  registerEvents = () => {
-    if (!this.events) {
-      // Register events if we have a valid session
-      let session = this.getVisitorSession()
-      // TODO: Validate session here
-      if (session && session.length) {
-        this.events = new Events(session, this.config)
-      }
     }
   }
 
@@ -59,27 +45,31 @@ export default class TonicPow {
   // captureVisitorSession will capture the session and store it
   // Builds a cookie so it's sent on requests automatically
   // Stores in local storage for easy access from the application
-  captureVisitorSession = (customSessionId: string = '') => {
-    let sessionId = customSessionId
-
+  captureVisitorSession = (customSessionId: string = '', customChallengeGuid: string = '') => {
+    let sessionId: string | null = customSessionId
+    let challengeGuid: string | null = customChallengeGuid
+    const urlParams = new URLSearchParams(window.location.search)
     if ((!customSessionId || !customSessionId.length) && typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search)
-      sessionId = urlParams.get(this.config.sessionName) || ''
+      sessionId = urlParams.get(this.config.sessionParameterName) || null
     }
+
+    if ((!customChallengeGuid || !customChallengeGuid.length) && typeof window !== 'undefined') {
+      challengeGuid = urlParams.get(this.config.challengeParameterName) || null
+    }
+
     if (sessionId && sessionId.length > 0) {
-      this.setOreo(this.config.sessionName, sessionId, this.config.maxSessionDays)
+      this.setOreo(this.config.sessionParameterName, sessionId, this.config.maxSessionDays)
       this.storage.setStorage(
-        this.config.sessionName,
+        this.config.sessionParameterName,
         sessionId,
         24 * 60 * 60 * this.config.maxSessionDays
       )
-      return sessionId
     }
-    return null
+    return { sessionId: sessionId, challengeGuid: challengeGuid }
   }
 
   // getVisitorSession will get the session if it exists
-  getVisitorSession = () => this.storage.getStorage(this.config.sessionName)
+  getVisitorSession = () => this.storage.getStorage(this.config.sessionParameterName)
 
   // loadDivs replaces each TonicPow div with a corresponding embed widget
   loadDivs = async () => {
@@ -181,11 +171,11 @@ export default class TonicPow {
     }
 
     // Process visitor token
-    const session = this.captureVisitorSession()
+    const { sessionId, challengeGuid } = this.captureVisitorSession()
 
-    // Capture events if we have a session
-    if (session) {
-      this.events = new Events(session, this.config)
+    // Capture events if we have a session, or responding to a challenge
+    if (sessionId || challengeGuid) {
+      this.events = new Events(sessionId || '', challengeGuid || '', this.config)
     }
   }
 }
