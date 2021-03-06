@@ -21,16 +21,16 @@ export default class Events {
   // Detects click on the widget
   detectWidgetClick = () => {
     document.addEventListener('click', async (e: Event) => {
-      e = e || window.event
-      var target = (e.target || e.srcElement) as HTMLDivElement
-      // Get container from the clicked element
+      // Get the click target
+      var target = (e || window.event).target as HTMLDivElement
+
+      // Get the widget container
       let container = target?.parentElement?.parentElement
-      // Send only if widget image was clicked
+
+      // Send event only if widget was clicked
       if (container?.classList?.contains('tonicpow-widget')) {
         try {
-          // Keepo this above send to prevent sending mousedown AND click on initial interaction
-          this.interactionSent = true
-          await this.sendEvent('interaction', 'click')
+          await this.sendEvent('click', container.getAttribute('widget-id') || '')
         } catch (e) {
           console.error('failed to report interaction: click', e)
         }
@@ -92,10 +92,16 @@ export default class Events {
     // Get config
     let config = new Config()
 
-    // todo: obfuscate the url params (change to payload of JSON?)
-    await fetch(
-      `${config.eventsUrl}/v1/events?v=${config.version}&name=${eventName}&tncpw_session=${this.sessionId}&data=${data}`,
-      { method: 'get' }
-    )
+    // Package payload
+    let payload = {
+      v: config.version,
+      name: eventName,
+      tncpw_session: this.sessionId,
+      data,
+    }
+
+    await fetch(`${config.eventsUrl}/v1/events?d=${btoa(JSON.stringify(payload))}`, {
+      method: 'get',
+    })
   }
 }
