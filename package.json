@@ -60,7 +60,6 @@
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0",
     "rimraf": "^3.0.2",
-    "source-map-loader": "^2.0.1",
     "ts-loader": "^8.0.17",
     "ts-node": "^8.10.2",
     "typescript": "3.9.6",

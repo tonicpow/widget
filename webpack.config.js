@@ -1,6 +1,5 @@
 // Common configuration
 let config = {
-  devtool: 'inline-source-map', // TODO: Turn this off for prod
   entry: './src/index.ts',
   mode: 'production',
   target: 'web',
