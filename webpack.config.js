@@ -31,6 +31,7 @@ let config = {
 let widgetJs = Object.assign({}, config, {
   output: {
     filename: 'widget.js',
+    publicPath: '',
   },
 })
 
@@ -38,6 +39,7 @@ let widgetJs = Object.assign({}, config, {
 let tonicpowJs = Object.assign({}, config, {
   output: {
     filename: 'tonicpow.js',
+    publicPath: '',
   },
 })
 
