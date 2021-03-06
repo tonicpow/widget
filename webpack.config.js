@@ -11,6 +11,12 @@ let config = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
+      {
+        test: /\.(png|svg|jpg)$/,
+        use: [
+            'file-loader',
+        ],
+      }
     ],
   },
   resolve: {

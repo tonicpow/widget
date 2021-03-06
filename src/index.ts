@@ -1,7 +1,9 @@
+import fallbackImage from './assets/image_placeholder_tonicpow_square.svg'
 import Config from './config'
 import Events from './events'
 import Storage from './storage'
 import Widget from './types'
+
 export default class TonicPow {
   config: Config
   storage: Storage
@@ -109,7 +111,16 @@ export default class TonicPow {
           `${this.config.apiUrl}/v1/widgets/display/${widgetId}?provider=embed-${this.config.version}`
         )
 
-        const response = await promise.json()
+        var response
+        if (promise.status === 403) {
+          console.info(promise.status, ': Domain not allowed')
+          response = {
+            link_url: 'https://tonicpow.com',
+            image_url: fallbackImage,
+          }
+        } else {
+          response = await promise.json()
+        }
 
         // Set URI encoded title
         const campaignTitle = encodeURIComponent(response.title)
@@ -130,7 +141,7 @@ export default class TonicPow {
         // Add to widgets map
         this.widgets.set(widgetId, response as typeof Widget)
       } catch (e) {
-        console.info('Could not display widget:', e)
+        throw e
       }
     }
   }
@@ -146,8 +157,12 @@ export default class TonicPow {
     // Load all tonics found on the page (if we have div)
     const tonicDivs = document.getElementsByClassName(this.config.widgetDivClass)
     if (tonicDivs && tonicDivs.length > 0) {
-      await this.loadDivs()
-      console.log('%c TonicPow widget(s) loaded! ', 'background: #974CD2; color: #fff')
+      try {
+        await this.loadDivs()
+        console.log('%c TonicPow widget(s) loaded! ', 'background: #974CD2; color: #fff')
+      } catch (e) {
+        throw e
+      }
     }
 
     // Process visitor token
@@ -159,6 +174,12 @@ export default class TonicPow {
     }
   }
 }
+var tpow
+try {
+  tpow = new TonicPow()
+} catch (e) {
+  console.log('errrmagord', e)
+}
 
+;(window as any).TonicPow = tpow || {}
 // Auto-load and set on window
-;(window as any).TonicPow = new TonicPow() || {}
