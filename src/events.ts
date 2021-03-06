@@ -117,10 +117,6 @@ export default class Events {
       data,
     } as any
 
-    if (this.challengeGuid) {
-      payload.tncpw_challenge = this.challengeGuid
-    }
-
     if (this.sessionId) {
       payload.tncpw_session = this.sessionId
     }
