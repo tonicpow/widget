@@ -10,9 +10,19 @@ declare module TonicPow {
   export function captureVisitorSession(customSessionId: string): string | null
   export function getVisitorSession(): string | null
   export function loadDivs(): Promise<void>
-  export function load(): void
+  export function load(): Promise<void>
   export function captureVisitorSession(): void
 
+  export interface Widget {
+    height: number
+    image_url: string
+    link_url: string
+    title: string
+    width: number
+    id: number
+  }
+
+  export const widgets: Map<string, Widget>
   export class Events {
     sessionId: string
     start: number

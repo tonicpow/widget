@@ -4,20 +4,19 @@
     <title>Example - TonicPow Widget</title>
     <meta name="bitcoin-address" content="1DnLAqoznKsXkJ1xJrVyr29JSKmfwxC4x5" />
     <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" />
-    <!-- <script src="../../dist/tonicpow.js"></script> -->
-    <script>
+    <script src="../../dist/tonicpow.js"></script>
+    <!-- <script>
       let script = document.createElement('Script')
       script.src = '../../dist/tonicpow.js'
       script.onload = () => {
-        new TonicPow({
-          AutoInit: true,
-          WidgetRequestCallback: (widget) => {
-            console.log('widget loaded!', widget)
-          },
+        let tonicPow = new TonicPow({
+          AutoInit: false,
         })
+
+        tonicPow.load()
       }
       document.head.appendChild(script)
-    </script>
+    </script> -->
     <style type="text/css">
       .example {
         padding: 15px;
@@ -43,7 +42,7 @@
 
     <div class="example">
       <h3 class="title">Invalid Widget ID</h3>
-      <div class="tonicpow-widget" data-widget-id="invalid-id"></div>
+      <div class="tonicpow-widget" data-widget-id="invalid-id" style="display: inline-block"></div>
     </div>
   </body>
 </html>
