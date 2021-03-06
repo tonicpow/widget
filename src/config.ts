@@ -18,6 +18,10 @@ export default class Config {
   version: string
   widgetDivClass: string
   widgetIdAttribute: string
+  hostUrlLocal: string
+  hostUrlStaging: string
+  hostUrlProduction: string
+  hostUrl: string
 
   constructor() {
     this.environmentLocal = 'local'
@@ -32,6 +36,10 @@ export default class Config {
     this.eventsUrlLocal = 'http://localhost:3002'
     this.eventsUrlStaging = 'https://events.staging.tonicpow.com'
     this.eventsUrlProduction = 'https://events.tonicpow.com'
+    this.hostUrl = 'http://tonicpow.com'
+    this.hostUrlLocal = 'http://localhost:3000'
+    this.hostUrlStaging = 'https://web.staging.tonicpow.com'
+    this.hostUrlProduction = 'https://tonicpow.com'
     this.customEnvironmentAttribute = 'data-environment'
     this.environment = ''
     this.environments = [this.environmentLocal, this.environmentStaging, this.environmentProduction]
@@ -64,12 +72,15 @@ export default class Config {
     if (environment === this.environmentStaging) {
       this.apiUrl = this.apiUrlStaging
       this.eventsUrl = this.eventsUrlStaging
+      this.hostUrl = this.hostUrlStaging
     } else if (environment === this.environmentLocal) {
       this.apiUrl = this.apiUrlLocal
       this.eventsUrl = this.eventsUrlLocal
+      this.hostUrl = this.hostUrlLocal
     } else if (environment === this.environmentProduction) {
       this.apiUrl = this.apiUrlProduction
       this.eventsUrl = this.eventsUrlProduction
+      this.hostUrl = this.hostUrlProduction
     }
   }
 }

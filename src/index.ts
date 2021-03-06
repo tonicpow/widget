@@ -1,4 +1,3 @@
-import fallbackImage from './assets/image_placeholder_tonicpow_square.svg'
 import Config from './config'
 import Events from './events'
 import Storage from './storage'
@@ -124,8 +123,8 @@ export default class TonicPow {
         if (promise.status === 403) {
           console.info(`${promise.status}: Domain not allowed`)
           response = {
-            link_url: 'https://tonicpow.com',
-            image_url: fallbackImage,
+            link_url: this.config.hostUrl,
+            image_url: `${this.config.hostUrl}/images/widgetFallback.svg`,
           }
         } else {
           // Get JSON response
