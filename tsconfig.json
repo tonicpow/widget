@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "sourceMap": false,
+    "noImplicitAny": true,
+    "module": "AMD",
+    "strict": true,
+    "target": "es2015",
+    "allowJs": true,
+    "lib": ["dom", "es2015", "es2017"],
+    "noImplicitReturns": true,
+    "esModuleInterop": true,
+    "typeRoots": [ "./src/types", "./node_modules/@types"],
+    "moduleResolution": "node",
+    "baseUrl": "./src"
+  },
+  "exclude": [
+    "./node_modules",
+    "./examples",
+    "./.github",
+    "./.make",
+    "./dist",
+    "./test"
+  ],
+  "include": ["./src/**/*", "./src/types/custom.d.ts", "test/index.spec.ts"]
+}
