@@ -30,7 +30,7 @@ export default class Events {
   detectWidgetClick = () => {
     document.addEventListener('click', async (e: Event) => {
       // Get the click target
-      var target = (e || window.event).target as HTMLDivElement
+      let target = (e || window.event).target as HTMLDivElement
 
       // Get the widget container
       let container = target?.parentElement?.parentElement
