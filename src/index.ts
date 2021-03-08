@@ -68,7 +68,7 @@ export default class TonicPow {
 
     if (challengeGuid && challengeGuid.length > 0) {
       // 60 = 1 minute - will be read by headless browser
-      this.storage.setStorage(this.config.challengeParameterName, challengeGuid, 24 * 60 * 60)
+      this.storage.setStorage(this.config.challengeParameterName, challengeGuid, 60)
     }
     return { sessionId: sessionId, challengeGuid: challengeGuid }
   }
