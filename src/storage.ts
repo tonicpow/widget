@@ -2,7 +2,7 @@
 
 export default class Storage {
   /*
-  removeStorage: removes a key from localStorage and its sibling expiracy key
+  removeStorage: removes a key from localStorage and its sibling expiry key
   params:
       key <string> : localStorage key to remove
   returns:

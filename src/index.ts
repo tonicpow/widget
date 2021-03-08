@@ -112,7 +112,7 @@ export default class TonicPow {
           `${this.config.apiUrl}/v1/widgets/display/${widgetId}?provider=embed-${this.config.version}`
         )
 
-        var response
+        let response
 
         // Handle domain not allowed
         if (promise.status === 403) {
@@ -138,7 +138,7 @@ export default class TonicPow {
       alt="${response.title}" />
       </a>`
 
-        // Set widget dimesions
+        // Set widget dimensions
         tonicDiv.setAttribute('data-width', response.width)
         tonicDiv.setAttribute('data-height', response.height)
 
@@ -186,6 +186,6 @@ export default class TonicPow {
 }
 
 // Auto-load and set on window
-var tpow = new TonicPow()
+let tpow = new TonicPow()
 
 ;(window as any).TonicPow = tpow || {}
