@@ -47,7 +47,7 @@ export default class Config {
     this.maxSessionDays = 60
     this.sessionParameterName = 'tncpw_session'
     this.challengeParameterName = 'tncpw_challenge'
-    this.version = 'v0.0.8'
+    this.version = 'v0.0.9'
     this.widgetDivClass = 'tonicpow-widget'
     this.widgetIdAttribute = 'data-widget-id'
   }

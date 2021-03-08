@@ -38,9 +38,9 @@ export default class Events {
       // Send event only if widget was clicked
       if (container?.classList?.contains('tonicpow-widget')) {
         try {
-          await this.sendEvent('click', container.getAttribute('widget-id') || '')
+          await this.sendEvent('widget_click', container.getAttribute('widget-id') || '')
         } catch (e) {
-          console.error('failed to report interaction: click', e)
+          console.error('failed to report interaction: widget_click', e)
         }
       }
     })
@@ -68,8 +68,8 @@ export default class Events {
     document.addEventListener('mousedown', async () => {
       if (!this.interactionSent) {
         try {
-          await this.sendEvent('interaction', 'mousedown')
           this.interactionSent = true
+          await this.sendEvent('interaction', 'mousedown')
         } catch (e) {
           console.error('failed to report interaction: mousedown', e)
         }
@@ -79,8 +79,8 @@ export default class Events {
     document.addEventListener('scroll', async () => {
       if (!this.interactionSent) {
         try {
-          await this.sendEvent('interaction', 'scroll')
           this.interactionSent = true
+          await this.sendEvent('interaction', 'scroll')
         } catch (e) {
           console.error('failed to report interaction: scroll', e)
         }
@@ -90,8 +90,8 @@ export default class Events {
     document.addEventListener('keypress', async () => {
       if (!this.interactionSent) {
         try {
-          await this.sendEvent('interaction', 'keypress')
           this.interactionSent = true
+          await this.sendEvent('interaction', 'keypress')
         } catch (e) {
           console.error('failed to report interaction: keypress', e)
         }
