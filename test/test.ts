@@ -54,6 +54,10 @@ describe('Testing config functions', () => {
       window.TonicPow.config.apiUrl === window.TonicPow.config.apiUrlStaging,
       `API url should be: staging, got: ${window.TonicPow.apiUrl}`
     )
+    assert(
+      window.TonicPow.config.eventsUrl === window.TonicPow.config.eventsUrlStaging,
+      `Event url should be: staging, got: ${window.TonicPow.eventsUrl}`
+    )
   })
 
   it('testing TonicPow.config.setEnvironment - local', () => {
@@ -65,6 +69,10 @@ describe('Testing config functions', () => {
     assert(
       window.TonicPow.config.apiUrl === window.TonicPow.config.apiUrlLocal,
       'API url should be: local'
+    )
+    assert(
+      window.TonicPow.config.eventsUrl === window.TonicPow.config.eventsUrlLocal,
+      `Event url should be: local, got: ${window.TonicPow.eventsUrl}`
     )
   })
 
@@ -78,6 +86,10 @@ describe('Testing config functions', () => {
       window.TonicPow.config.apiUrl === window.TonicPow.config.apiUrlProduction,
       'API url should be: production'
     )
+    assert(
+      window.TonicPow.config.eventsUrl === window.TonicPow.config.eventsUrlProduction,
+      `Event url should be: production, got: ${window.TonicPow.eventsUrl}`
+    )
   })
 
   it('testing TonicPow.config.setEnvironment - failures', () => {
@@ -90,6 +102,10 @@ describe('Testing config functions', () => {
       window.TonicPow.config.apiUrl === window.TonicPow.config.apiUrlProduction,
       'API url should be: production'
     )
+    assert(
+      window.TonicPow.config.eventsUrl === window.TonicPow.config.eventsUrlProduction,
+      'Event url should be: production'
+    )
     window.TonicPow.config.setEnvironment('unknown')
 
     assert(
@@ -99,6 +115,10 @@ describe('Testing config functions', () => {
     assert(
       window.TonicPow.config.apiUrl === window.TonicPow.config.apiUrlProduction,
       'API url should be: production'
+    )
+    assert(
+      window.TonicPow.config.eventsUrl === window.TonicPow.config.eventsUrlProduction,
+      'Event url should be: production'
     )
   })
 })
