@@ -23,7 +23,16 @@ export default class Events {
       this.detectInteraction()
       this.detectBounce()
       this.detectWidgetClick()
+      this.sendPing()
     }
+  }
+
+  // Sends a ping after 4 seconds
+  sendPing = () => {
+    setTimeout(() => {
+      console.log('sending')
+      this.sendEvent('ping', (new Date().getTime() - this.start).toString())
+    }, 1000 * 4)
   }
 
   // Detects click on the widget
@@ -38,7 +47,10 @@ export default class Events {
       // Send event only if widget was clicked
       if (container?.classList?.contains('tonicpow-widget')) {
         try {
-          await this.sendEvent('widget_click', container.getAttribute('widget-id') || '')
+          await this.sendEvent(
+            'widget_click',
+            container.getAttribute(this.config.widgetIdAttribute) || ''
+          )
         } catch (e) {
           console.error('failed to report interaction: widget_click', e)
         }
