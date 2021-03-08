@@ -8,7 +8,7 @@ export default class Storage {
   returns:
       <boolean> : telling if operation succeeded
   */
-  removeStorage = (name: string) => {
+  removeStorage = (name: string): boolean => {
     try {
       localStorage.removeItem(name)
       localStorage.removeItem(`${name}_expiresIn`)
@@ -29,7 +29,7 @@ export default class Storage {
       <string> : value of localStorage key
       null : in case of expired key or failure
   */
-  getStorage = (key: string) => {
+  getStorage = (key: string): string | null => {
     // epoch time, lets deal only with integer
     const now = Date.now()
 
@@ -71,7 +71,7 @@ export default class Storage {
   returns:
       <boolean> : telling if operation succeeded
   */
-  setStorage = (key: string, value: string, expires: number | null = null) => {
+  setStorage = (key: string, value: string, expires: number | null = null): boolean => {
     // Expired time
     if (expires) {
       expires = Math.abs(expires) // make sure it's positive

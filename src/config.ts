@@ -53,10 +53,10 @@ export default class Config {
   }
 
   // isEnvironmentValid will check if the given environment is valid
-  isEnvironmentValid = (environment: string) => this.environments.includes(environment)
+  isEnvironmentValid = (environment: string): boolean => this.environments.includes(environment)
 
   // setEnvironment will set the environment
-  setEnvironment = (environment: string) => {
+  setEnvironment = (environment: string): void => {
     // No environment set? use the default
     if (!environment) {
       return

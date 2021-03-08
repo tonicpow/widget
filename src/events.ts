@@ -1,5 +1,5 @@
+import TonicPow from 'types'
 import Config from './config'
-
 export default class Events {
   sessionId: string
   start: number
@@ -7,7 +7,7 @@ export default class Events {
   config: Config
   challengeGuid: string
 
-  constructor(sessionId: string = '', challengeGuid: string = '', config: Config) {
+  constructor(sessionId = '', challengeGuid = '', config: Config) {
     // Set the current session
     this.sessionId = sessionId
     this.config = config
@@ -28,7 +28,7 @@ export default class Events {
   }
 
   // Sends a ping after 4 seconds
-  sendPing = () => {
+  sendPing = (): void => {
     setTimeout(() => {
       console.log('sending')
       this.sendEvent('ping', (new Date().getTime() - this.start).toString())
@@ -36,13 +36,13 @@ export default class Events {
   }
 
   // Detects click on the widget
-  detectWidgetClick = () => {
+  detectWidgetClick = (): void => {
     document.addEventListener('click', async (e: Event) => {
       // Get the click target
-      let target = (e || window.event).target as HTMLDivElement
+      const target = (e || window.event).target as HTMLDivElement
 
       // Get the widget container
-      let container = target?.parentElement?.parentElement
+      const container = target?.parentElement?.parentElement
 
       // Send event only if widget was clicked
       if (container?.classList?.contains('tonicpow-widget')) {
@@ -59,7 +59,7 @@ export default class Events {
   }
 
   // Detects a bounce event
-  detectBounce = () => {
+  detectBounce = (): void => {
     window.onbeforeunload = () => {
       // Calculate time on page
       this.sendEvent('bounce', (new Date().getTime() - this.start).toString())
@@ -67,7 +67,7 @@ export default class Events {
   }
 
   // Sends a challenge response
-  sendChallengeResponse = () => {
+  sendChallengeResponse = (): void => {
     try {
       this.sendEvent('challenge', this.challengeGuid)
     } catch (e) {
@@ -76,7 +76,7 @@ export default class Events {
   }
 
   // Detects a page interaction
-  detectInteraction = () => {
+  detectInteraction = (): void => {
     document.addEventListener('mousedown', async () => {
       if (!this.interactionSent) {
         try {
@@ -112,22 +112,22 @@ export default class Events {
   }
 
   // Send event will send an event to TonicPow
-  sendEvent = async (eventName: string, data: string) => {
+  sendEvent = async (eventName: string, data: string): Promise<void> => {
     if (!this.sessionId && !this.challengeGuid) {
       console.info('you must call init with a session before sending events')
       return
     }
 
     // Get origin
-    let location = window.location.href
+    const location = window.location.href
 
     // Package payload
-    let payload = {
+    const payload = {
       v: this.config.version,
       name: eventName,
       location,
       data,
-    } as any
+    } as TonicPow.Payload
 
     if (this.sessionId) {
       payload.tncpw_session = this.sessionId

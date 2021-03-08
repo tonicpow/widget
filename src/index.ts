@@ -1,24 +1,22 @@
 import Config from './config'
 import Events from './events'
 import Storage from './storage'
-import Widget from './types'
-
-interface TonicPowOptions {
-  onWidgetLoaded: (widget: typeof Widget) => void
-}
+import TPow from './types'
 
 export default class TonicPow {
   config: Config
   storage: Storage
   events: Events | undefined
-  widgets: Map<String, typeof Widget | null>
-  options: TonicPowOptions | undefined
+  widgets: Map<string, TPow.Widget | null>
+  options: TPow.TonicPowOptions | undefined
+  environment: string | undefined
+  apiUrl: string | undefined
 
-  constructor(options?: TonicPowOptions) {
+  constructor(options?: TPow.TonicPowOptions) {
     // Set namespaces
     this.config = new Config()
     this.storage = new Storage()
-    this.widgets = new Map<String, typeof Widget>()
+    this.widgets = new Map<string, TPow.Widget>()
     this.options = options
 
     // Start the TonicPow service and load modules
@@ -36,7 +34,7 @@ export default class TonicPow {
   }
 
   // setOreo for creating new oreos
-  setOreo = (name: string, value: string, days: number) => {
+  setOreo = (name: string, value: string, days: number): void => {
     const date = new Date()
     date.setTime(date.getTime() + 24 * 60 * 60 * 1000 * days)
     document.cookie = `${name}=${value};path=/;expires=${date.toUTCString()}`
@@ -45,7 +43,7 @@ export default class TonicPow {
   // captureVisitorSession will capture the session and store it
   // Builds a cookie so it's sent on requests automatically
   // Stores in local storage for easy access from the application
-  captureVisitorSession = (customSessionId: string = '', customChallengeGuid: string = '') => {
+  captureVisitorSession = (customSessionId = '', customChallengeGuid = ''): TPow.Capture => {
     let sessionId: string | null = customSessionId
     let challengeGuid: string | null = customChallengeGuid
     const urlParams = new URLSearchParams(window.location.search)
@@ -74,10 +72,10 @@ export default class TonicPow {
   }
 
   // getVisitorSession will get the session if it exists
-  getVisitorSession = () => this.storage.getStorage(this.config.sessionParameterName)
+  getVisitorSession = (): string | null => this.storage.getStorage(this.config.sessionParameterName)
 
   // loadDivs replaces each TonicPow div with a corresponding embed widget
-  loadDivs = async () => {
+  loadDivs = async (): Promise<void> => {
     // Get all divs
     const tonicDivs = document.getElementsByClassName(this.config.widgetDivClass)
 
@@ -143,12 +141,12 @@ export default class TonicPow {
         tonicDiv.setAttribute('data-height', response.height)
 
         // Add to widgets map
-        this.widgets.set(widgetId, response as typeof Widget)
+        this.widgets.set(widgetId, response as TPow.Widget)
 
         // Fire onWidgetLoaded callback if provided
         if (this.options && this.options.onWidgetLoaded) {
           response.id = widgetId
-          this.options.onWidgetLoaded(response as typeof Widget)
+          this.options.onWidgetLoaded(response as TPow.Widget)
         }
       } catch (e) {
         throw e
@@ -157,7 +155,7 @@ export default class TonicPow {
   }
 
   // Load the TonicPow script(s) and default settings
-  load = async () => {
+  load = async (): Promise<void> => {
     // We only work in a browser
     if (typeof window === 'undefined') {
       console.error('TonicPow embed only works in the browser')
@@ -186,6 +184,12 @@ export default class TonicPow {
 }
 
 // Auto-load and set on window
-let tpow = new TonicPow()
+const tpow = new TonicPow()
 
-;(window as any).TonicPow = tpow || {}
+declare global {
+  interface Window {
+    TonicPow: unknown
+  }
+}
+
+window.TonicPow = tpow || {}
