@@ -30,7 +30,6 @@ export default class Events {
   // Sends a ping after 4 seconds
   sendPing = (): void => {
     setTimeout(() => {
-      console.log('sending')
       this.sendEvent('ping', (new Date().getTime() - this.start).toString())
     }, 1000 * 4)
   }
