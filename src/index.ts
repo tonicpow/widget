@@ -9,8 +9,7 @@ export default class TonicPow {
   events: Events | undefined
   widgets: Map<string, TPow.Widget | null>
   options: TPow.TonicPowOptions | undefined
-  environment: string | undefined
-  apiUrl: string | undefined
+  buttonStyleAppended: boolean
 
   constructor(options?: TPow.TonicPowOptions) {
     // Set namespaces
@@ -18,6 +17,8 @@ export default class TonicPow {
     this.storage = new Storage()
     this.widgets = new Map<string, TPow.Widget>()
     this.options = options
+
+    this.buttonStyleAppended = false;
 
     // Start the TonicPow service and load modules
 
@@ -90,67 +91,129 @@ export default class TonicPow {
         continue
       }
 
-      // Get the widget id
-      const widgetId = tonicDiv.getAttribute(this.config.widgetIdAttribute)
-      if (!widgetId) {
-        console.log(`${widgetId} not found`)
-        continue
-      }
-
       // Get the custom environment (switching away from default: production)
       const customEnvironment = tonicDiv.getAttribute(this.config.customEnvironmentAttribute)
       this.config.setEnvironment(customEnvironment || 'production')
 
-      // Add to widgets map
-      this.widgets.set(widgetId, null)
+      const widgetType = tonicDiv.getAttribute('data-widget-type')
+      switch(widgetType) {
+        case 'tonicpow-share-button':
+          this.initializeButton(tonicDiv)
+          break;
+        case 'tonicpow-banner':
+        default:
+          await this.initializeBanner(tonicDiv)
+          break;
+      }
+    }
+  }
 
-      try {
-        // Fire the request to load the widget data
-        const promise = await fetch(
-          `${this.config.apiUrl}/v1/widgets/display/${widgetId}?provider=embed-${this.config.version}`
-        )
+  private getDataAttributes = function(el: HTMLElement) {
+    const data: Record<string, string> = {};
+    [].forEach.call(el.attributes, function(attr: Record<string, string>) {
+      if (/^data-/.test(attr.name)) {
+        const camelCaseName: string = attr.name.substr(5).replace(/-(.)/g, function($0, $1) {
+          return $1.toUpperCase()
+        })
+        data[camelCaseName] = attr.value
+      }
+    })
+    return data
+  }
 
-        let response
+  private initializeButton(tonicDiv: HTMLDivElement) {
+    const targetUrl = encodeURIComponent(document.location.href)
+    const dataAttributes: Record<string, string> = this.getDataAttributes(tonicDiv)
 
-        // Handle domain not allowed
-        if (promise.status === 403) {
-          console.info(`${promise.status}: Domain not allowed`)
-          response = {
-            link_url: this.config.hostUrl,
-            image_url: `${this.config.hostUrl}/images/widgetFallback.svg`,
-          }
-        } else {
-          // Get JSON response
-          response = await promise.json()
+    let urlAttributes = ''
+    for (const key in dataAttributes) {
+      if (dataAttributes.hasOwnProperty(key)) {
+        urlAttributes += `&${key}=${dataAttributes[key]}`
+      }
+    }
+
+    tonicDiv.innerHTML = `
+      <iframe
+        src='${this.config.hostUrl}/share_button.html?targetUrl=${targetUrl}${urlAttributes}'
+        class='tonicpow-widget-share-button'
+        width='${dataAttributes.width || 150}'
+        height='${dataAttributes.height || 50}'
+      />`
+
+    this.initializeButtonStyles();
+  }
+
+  private initializeButtonStyles() {
+    // push css styles on iFrame rendering
+    if (!this.buttonStyleAppended) {
+      const css = `
+          * { clear: all }
+          .tonicpow-widget-share-button { border: none; }
+          .tonicpow-widget-share-button > iframe { overflow: hidden; }`
+      const style = document.createElement('style')
+      style.appendChild(document.createTextNode(css))
+      document.head.appendChild(style)
+      this.buttonStyleAppended = true;
+    }
+  }
+
+  private async initializeBanner(tonicDiv: HTMLDivElement) {
+    // Get the widget id
+    const widgetId = tonicDiv.getAttribute(this.config.widgetIdAttribute)
+    if (!widgetId) {
+      console.log(`${widgetId} not found`)
+      return
+    }
+
+    // Add to widgets map
+    this.widgets.set(widgetId, null)
+
+    try {
+      // Fire the request to load the widget data
+      const promise = await fetch(
+        `${this.config.apiUrl}/v1/widgets/display/${widgetId}?provider=embed-${this.config.version}`
+      )
+
+      let response
+
+      // Handle domain not allowed
+      if (promise.status === 403) {
+        console.info(`${promise.status}: Domain not allowed`)
+        response = {
+          link_url: this.config.hostUrl,
+          image_url: `${this.config.hostUrl}/images/widgetFallback.svg`
         }
+      } else {
+        // Get JSON response
+        response = await promise.json()
+      }
 
-        // Set URI encoded title
-        const campaignTitle = encodeURIComponent(response.title)
+      // Set URI encoded title
+      const campaignTitle = encodeURIComponent(response.title)
 
-        // Set the HTML
-        tonicDiv.innerHTML = `
-      <a href="${response.link_url}?utm_source=tonicpow-widgets&utm_medium=widget&utm_campaign=${widgetId}&utm_content=${campaignTitle}" style="display: inline-block">
-      <img src="${response.image_url}" 
-      width="${response.width}" 
-      height="${response.height}" 
-      alt="${response.title}" />
+      // Set the HTML
+      tonicDiv.innerHTML = `
+      <a href='${response.link_url}?utm_source=tonicpow-widgets&utm_medium=widget&utm_campaign=${widgetId}&utm_content=${campaignTitle}' style='display: inline-block'>
+      <img src='${response.image_url}' 
+      width='${response.width}' 
+      height='${response.height}' 
+      alt='${response.title}' />
       </a>`
 
-        // Set widget dimensions
-        tonicDiv.setAttribute('data-width', response.width)
-        tonicDiv.setAttribute('data-height', response.height)
+      // Set widget dimensions
+      tonicDiv.setAttribute('data-width', response.width)
+      tonicDiv.setAttribute('data-height', response.height)
 
-        // Add to widgets map
-        this.widgets.set(widgetId, response as TPow.Widget)
+      // Add to widgets map
+      this.widgets.set(widgetId, response as TPow.Widget)
 
-        // Fire onWidgetLoaded callback if provided
-        if (this.options && this.options.onWidgetLoaded) {
-          response.id = widgetId
-          this.options.onWidgetLoaded(response as TPow.Widget)
-        }
-      } catch (e) {
-        throw e
+      // Fire onWidgetLoaded callback if provided
+      if (this.options && this.options.onWidgetLoaded) {
+        response.id = widgetId
+        this.options.onWidgetLoaded(response as TPow.Widget)
       }
+    } catch (e) {
+      throw e
     }
   }
 
@@ -188,7 +251,7 @@ const tpow = new TonicPow()
 
 declare global {
   interface Window {
-    TonicPow: unknown
+    TonicPow: any
   }
 }
 
