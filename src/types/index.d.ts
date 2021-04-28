@@ -72,6 +72,31 @@ declare namespace TPow {
     removeStorage(name: string): boolean
     setStorage(key: string, value: string, expires: number | null): boolean
   }
+
+  interface onSuccessFunction { (data: Record<string, string>): void }
+  interface onErrorFunction { (data: Record<string, string>): void }
+  export interface ShareButtonOptions {
+    [key: string]: any;
+  }
+
+  export type _ShareButtonOptions = {
+    buttonId?: string
+    width?: string
+    height?: string
+    backgroundColor?: string
+    getLinkText?: string
+    authText?: string
+    doneText?: string
+    errorText?: string
+    loadingText?: string
+    onSuccess?: onSuccessFunction
+    onError?: onErrorFunction
+  }
+
+  export type PopupOptions = {
+    title?: string
+    message?: string
+  }
 }
 
 export default TPow
