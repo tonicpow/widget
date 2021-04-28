@@ -9,7 +9,9 @@ export default class TonicPow {
   events: Events | undefined
   widgets: Map<string, TPow.Widget | null>
   options: TPow.TonicPowOptions | undefined
-  buttonStyleAppended: boolean
+  buttonViewsInitialized: boolean
+  shareButtons: Map<string, TPow.ShareButtonOptions>
+  nrOfButtons: number
 
   constructor(options?: TPow.TonicPowOptions) {
     // Set namespaces
@@ -18,7 +20,9 @@ export default class TonicPow {
     this.widgets = new Map<string, TPow.Widget>()
     this.options = options
 
-    this.buttonStyleAppended = false;
+    this.buttonViewsInitialized = false
+    this.shareButtons = new Map<string, TPow.ShareButtonOptions>()
+    this.nrOfButtons = 0
 
     // Start the TonicPow service and load modules
 
@@ -124,36 +128,107 @@ export default class TonicPow {
   private initializeButton(tonicDiv: HTMLDivElement) {
     const targetUrl = encodeURIComponent(document.location.href)
     const dataAttributes: Record<string, string> = this.getDataAttributes(tonicDiv)
+    if (!dataAttributes.buttonId) {
+      tonicDiv.id = 'tonicpow-button-id-' + this.nrOfButtons++;
+      dataAttributes.buttonId = tonicDiv.id;
+    }
 
-    let urlAttributes = ''
+    const buttonOptions: TPow.ShareButtonOptions = this.shareButtons.get(dataAttributes.buttonId) || {};
+
     for (const key in dataAttributes) {
-      if (dataAttributes.hasOwnProperty(key)) {
-        urlAttributes += `&${key}=${dataAttributes[key]}`
+      // button options override the data attributes
+      if (dataAttributes.hasOwnProperty(key) && !(buttonOptions && buttonOptions.hasOwnProperty(key))) {
+        buttonOptions[key] = dataAttributes[key]
       }
     }
+
+    let urlAttributes = ''
+    for (const key in buttonOptions) {
+      if (buttonOptions.hasOwnProperty(key) && typeof buttonOptions[key] === 'string') {
+        urlAttributes += `&${key}=${buttonOptions[key]}`
+      }
+    }
+
+    if (!buttonOptions.width) buttonOptions.width = '150'
+    if (!buttonOptions.height) buttonOptions.height = '50'
+
+    this.shareButtons.set(dataAttributes.buttonId, buttonOptions)
 
     tonicDiv.innerHTML = `
       <iframe
         src='${this.config.hostUrl}/share_button.html?targetUrl=${targetUrl}${urlAttributes}'
         class='tonicpow-widget-share-button'
-        width='${dataAttributes.width || 150}'
-        height='${dataAttributes.height || 50}'
+        width='${buttonOptions.width}'
+        height='${buttonOptions.height}'
       />`
 
-    this.initializeButtonStyles();
+    this.initializeButtonViews();
   }
 
-  private initializeButtonStyles() {
+  shareButton = (id: string, options: TPow.ShareButtonOptions): void => {
+    this.shareButtons.set(id, options)
+  }
+
+  private initializeButtonViews() {
     // push css styles on iFrame rendering
-    if (!this.buttonStyleAppended) {
+    if (!this.buttonViewsInitialized) {
       const css = `
           * { clear: all }
           .tonicpow-widget-share-button { border: none; }
-          .tonicpow-widget-share-button > iframe { overflow: hidden; }`
+          .tonicpow-widget-share-button > iframe { overflow: hidden; }
+          .tonicpow-modal { font-family: Nunito, Arial; display: flex; align-items: center; padding: 0 1em; text-align: center; width: 100%; height: 100%; position: fixed; top: 0; left: 0; }
+          .tonicpow-modal__overlay { background: black; bottom: 0; left: 0; position: fixed; right: 0; text-align: center; top: 0; z-index: -800; opacity: 0.5; }
+          .tonicpow-modal__box { padding: 25px; position: relative; margin: 1em auto; max-width: 500px; width: 90%; background-color: #fff; border-radius: 12px; }
+          .tonicpow-modal__box > h2 { margin-top: 0; text-align: left; }
+          .tonicpow-modal__box > h2 > .tonicpow-modal__close { float: right; cursor: pointer; }
+          `
       const style = document.createElement('style')
       style.appendChild(document.createTextNode(css))
       document.head.appendChild(style)
-      this.buttonStyleAppended = true;
+      this.buttonViewsInitialized = true;
+
+      window.addEventListener('message', (event) => {
+        if (event.data && event.data.buttonId && event.data.source === 'tonicpow') {
+          const options: TPow.ShareButtonOptions = this.shareButtons.get(event.data.buttonId) || {}
+          if (event.data.error) {
+            if (options.hasOwnProperty('onError') && typeof options.onError === 'function') {
+              options.onError(event.data)
+            } else {
+              TonicPow.showPopup({title: 'ERROR: ' + event.data.error, message: event.data.message})
+            }
+          } else {
+            if (options.hasOwnProperty('onSuccess') && typeof options.onSuccess === 'function') {
+              options.onSuccess(event.data)
+            } else {
+              TonicPow.showPopup({title: 'TonicPow link', message: event.data.shortLinkURL})
+            }
+          }
+        }
+      });
+    }
+  }
+
+  private static showPopup(options: TPow.PopupOptions) {
+    const elem = document.createElement('div')
+    elem.id = 'tonicpow-widget-popup'
+    elem.classList.add('tonicpow-modal')
+    elem.innerHTML = `
+      <div class="tonicpow-modal__overlay" onclick="TonicPow.closePopup();"></div>
+      <div class="tonicpow-modal__box">
+        <h2>
+          ${options.title}
+          <span class="tonicpow-modal__close" onclick="TonicPow.closePopup();">X</span>
+        </h2>
+        <p>${options.message}</p>
+      </div>
+    `
+    document.body.appendChild(elem)
+  }
+
+  closePopup = (): void => {
+    const popupElement: HTMLElement | null = document.getElementById('tonicpow-widget-popup')
+    if (popupElement) {
+      popupElement.remove()
     }
   }
 
