@@ -11,6 +11,7 @@
 
 ## Table of Contents
 
+- [Features](#Features)
 - [Installation](#installation)
 - [Documentation](#documentation)
 - [Examples](#examples)
@@ -19,6 +20,13 @@
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
 - [License](#license)
+
+## Features
+
+- Create banner widgets
+- Create share button widgets
+- Manage session tokens for firing conversions
+- Completes TonicPow basic website integration on a campaign
 
 ## Installation
 
@@ -132,11 +140,13 @@ tag-update           Update an existing tag to current commit (tag-update versio
 ## Examples
 
 View some [example TonicPow widgets](/examples/basic/basic-example.html)
-  
+
 <br/>
 
 ### Unit Tests
+
 Run the unit tests:
+
 ```shell script
 make test
 ```
