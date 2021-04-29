@@ -5,6 +5,28 @@
     <meta name="bitcoin-address" content="1DnLAqoznKsXkJ1xJrVyr29JSKmfwxC4x5" />
     <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico" />
     <script src="../../dist/tonicpow.js"></script>
+
+    <script>
+      function successCallback(data) {
+        // data.buttonId === "myButton"
+        // data.shortLinkUrl === "https://tpow.app/whateva"
+        console.log('SUCCESS', data)
+      }
+
+      function errorCallback(data) {
+        // data.buttonId === "myButton"
+        // data.message === "omg so bad"
+        console.log('ERROR', data)
+      }
+
+      TonicPow.shareButton('myButton', {
+        onSuccess: successCallback,
+        onError: errorCallback,
+        backgroundColor: 'blue',
+        height: 400,
+      })
+    </script>
+
     <style type="text/css">
       .example {
         padding: 15px;
@@ -28,8 +50,14 @@
     </div>
 
     <div class="example">
-      <h3 class="title">Invalid Widget ID</h3>
-      <div class="tonicpow-widget" data-widget-id="invalid-id"></div>
+      <h3 class="title">Share Button</h3>
+      <div
+        class="tonicpow-widget"
+        data-environment="staging"
+        data-widget-type="share-button"
+        data-target-url="https://google.com"
+        data-button-id="someUniqueString"
+      ></div>
     </div>
   </body>
 </html>

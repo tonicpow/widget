@@ -38,7 +38,7 @@ export default class Config {
     this.eventsUrlStaging = 'https://events.staging.tonicpow.com'
     this.eventsUrlProduction = 'https://events.tonicpow.com'
     this.hostUrl = 'http://tonicpow.com'
-    this.hostUrlLocal = 'http://localhost:3000'
+    this.hostUrlLocal = 'http://localhost'
     this.hostUrlStaging = 'https://web.staging.tonicpow.com'
     this.hostUrlProduction = 'https://tonicpow.com'
     this.customEnvironmentAttribute = 'data-environment'

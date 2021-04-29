@@ -100,23 +100,23 @@ export default class TonicPow {
       this.config.setEnvironment(customEnvironment || 'production')
 
       const widgetType = tonicDiv.getAttribute('data-widget-type')
-      switch(widgetType) {
-        case 'tonicpow-share-button':
+      switch (widgetType) {
+        case 'share-button':
           this.initializeButton(tonicDiv)
-          break;
-        case 'tonicpow-banner':
+          break
+        case 'banner':
         default:
           await this.initializeBanner(tonicDiv)
-          break;
+          break
       }
     }
   }
 
-  private getDataAttributes = function(el: HTMLElement) {
-    const data: Record<string, string> = {};
-    [].forEach.call(el.attributes, function(attr: Record<string, string>) {
+  private getDataAttributes = function (el: HTMLElement) {
+    const data: Record<string, string> = {}
+    ;[].forEach.call(el.attributes, function (attr: Record<string, string>) {
       if (/^data-/.test(attr.name)) {
-        const camelCaseName: string = attr.name.substr(5).replace(/-(.)/g, function($0, $1) {
+        const camelCaseName: string = attr.name.substr(5).replace(/-(.)/g, function ($0, $1) {
           return $1.toUpperCase()
         })
         data[camelCaseName] = attr.value
@@ -126,18 +126,21 @@ export default class TonicPow {
   }
 
   private initializeButton(tonicDiv: HTMLDivElement) {
-    const targetUrl = encodeURIComponent(document.location.href)
     const dataAttributes: Record<string, string> = this.getDataAttributes(tonicDiv)
     if (!dataAttributes.buttonId) {
-      tonicDiv.id = 'tonicpow-button-id-' + this.nrOfButtons++;
-      dataAttributes.buttonId = tonicDiv.id;
+      tonicDiv.id = 'tonicpow-button-id-' + this.nrOfButtons++
+      dataAttributes.buttonId = tonicDiv.id
     }
 
-    const buttonOptions: TPow.ShareButtonOptions = this.shareButtons.get(dataAttributes.buttonId) || {};
+    const buttonOptions: TPow.ShareButtonOptions =
+      this.shareButtons.get(dataAttributes.buttonId) || {}
 
     for (const key in dataAttributes) {
       // button options override the data attributes
-      if (dataAttributes.hasOwnProperty(key) && !(buttonOptions && buttonOptions.hasOwnProperty(key))) {
+      if (
+        dataAttributes.hasOwnProperty(key) &&
+        !(buttonOptions && buttonOptions.hasOwnProperty(key))
+      ) {
         buttonOptions[key] = dataAttributes[key]
       }
     }
@@ -151,18 +154,20 @@ export default class TonicPow {
 
     if (!buttonOptions.width) buttonOptions.width = '150'
     if (!buttonOptions.height) buttonOptions.height = '50'
+    if (!buttonOptions.targetUrl)
+      buttonOptions.targetUrl = encodeURIComponent(document.location.href)
 
     this.shareButtons.set(dataAttributes.buttonId, buttonOptions)
 
     tonicDiv.innerHTML = `
       <iframe
-        src='${this.config.hostUrl}/share_button.html?targetUrl=${targetUrl}${urlAttributes}'
+        src='${this.config.hostUrl}/share_button.html?targetUrl=${buttonOptions.targetUrl}${urlAttributes}'
         class='tonicpow-widget-share-button'
         width='${buttonOptions.width}'
         height='${buttonOptions.height}'
       />`
 
-    this.initializeButtonViews();
+    this.initializeButtonViews()
   }
 
   shareButton = (id: string, options: TPow.ShareButtonOptions): void => {
@@ -185,7 +190,7 @@ export default class TonicPow {
       const style = document.createElement('style')
       style.appendChild(document.createTextNode(css))
       document.head.appendChild(style)
-      this.buttonViewsInitialized = true;
+      this.buttonViewsInitialized = true
 
       window.addEventListener('message', (event) => {
         if (event.data && event.data.buttonId && event.data.source === 'tonicpow') {
@@ -194,17 +199,20 @@ export default class TonicPow {
             if (options.hasOwnProperty('onError') && typeof options.onError === 'function') {
               options.onError(event.data)
             } else {
-              TonicPow.showPopup({title: 'ERROR: ' + event.data.error, message: event.data.message})
+              TonicPow.showPopup({
+                title: 'ERROR: ' + event.data.error,
+                message: event.data.message,
+              })
             }
           } else {
             if (options.hasOwnProperty('onSuccess') && typeof options.onSuccess === 'function') {
               options.onSuccess(event.data)
             } else {
-              TonicPow.showPopup({title: 'TonicPow link', message: event.data.shortLinkURL})
+              TonicPow.showPopup({ title: 'TonicPow link', message: event.data.shortLinkURL })
             }
           }
         }
-      });
+      })
     }
   }
 
@@ -256,7 +264,7 @@ export default class TonicPow {
         console.info(`${promise.status}: Domain not allowed`)
         response = {
           link_url: this.config.hostUrl,
-          image_url: `${this.config.hostUrl}/images/widgetFallback.svg`
+          image_url: `${this.config.hostUrl}/images/widgetFallback.svg`,
         }
       } else {
         // Get JSON response
