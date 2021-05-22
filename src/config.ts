@@ -23,6 +23,7 @@ export default class Config {
   hostUrlStaging: string
   hostUrlProduction: string
   hostUrl: string
+  fbAppId: string
 
   constructor() {
     this.environmentLocal = 'local'
@@ -50,6 +51,8 @@ export default class Config {
     this.version = 'v0.0.10'
     this.widgetDivClass = 'tonicpow-widget'
     this.widgetIdAttribute = 'data-widget-id'
+
+    this.fbAppId = '293952358462196'
   }
 
   // isEnvironmentValid will check if the given environment is valid

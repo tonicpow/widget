@@ -25,6 +25,25 @@ declare namespace TPow {
   export function loadDivs(): Promise<void>
   export function load(): Promise<void>
 
+  export interface ShortLink {
+    campaign_id: number
+    click_satoshis: number
+    conversion_satoshis: number
+    country: string
+    custom_short_code: string
+    id: number
+    image_url: string
+    label: string
+    short_code: string
+    short_link_url: string
+    slug: string
+    target_url: string
+    title: string
+    total_clicks: 0
+    total_conversions: 0
+    user_id: 23
+  }
+
   export interface Widget {
     height: number
     image_url: string
@@ -73,10 +92,14 @@ declare namespace TPow {
     setStorage(key: string, value: string, expires: number | null): boolean
   }
 
-  interface onSuccessFunction { (data: Record<string, string>): void }
-  interface onErrorFunction { (data: Record<string, string>): void }
+  interface onSuccessFunction {
+    (data: Record<string, string>): void
+  }
+  interface onErrorFunction {
+    (data: Record<string, string>): void
+  }
   export interface ShareButtonOptions {
-    [key: string]: any;
+    [key: string]: any
   }
 
   export type _ShareButtonOptions = {
@@ -95,7 +118,7 @@ declare namespace TPow {
 
   export type PopupOptions = {
     title?: string
-    message?: string
+    shortLink?: ShortLink
   }
 }
 
