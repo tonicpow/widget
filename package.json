@@ -55,7 +55,7 @@
     "eslint-plugin-mocha": "^8.1.0",
     "eslint-plugin-prettier": "^3.4.0",
     "husky": "^6.0.0",
-    "jsdom": "16.5.3",
+    "jsdom": "16.6.0",
     "jsdom-global": "^3.0.2",
     "lint-staged": "^11.0.0",
     "mocha": "^8.3.2",
