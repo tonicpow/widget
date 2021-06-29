@@ -440,7 +440,8 @@ export default class TonicPow {
         <img src='${response.image_url}' 
           width='${response.width}' 
           height='${response.height}' 
-          alt='${response.title}' />
+          alt='${response.title}'
+          loading='lazy' />
       </a>`
 
       // Set widget dimensions
