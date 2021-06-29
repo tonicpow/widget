@@ -9,15 +9,15 @@ let config = {
         test: /\.ts?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
-      }
+      },
     ],
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
   stats: {
-    errorDetails: true
-  }
+    errorDetails: true,
+  },
 }
 
 // Build a version for widgets (deprecated)
