@@ -436,9 +436,10 @@ export default class TonicPow {
 
       // Set the HTML
       tonicDiv.innerHTML = `
-      <a href='${response.link_url}?utm_source=tonicpow-widgets&utm_medium=widget&utm_campaign=${widgetId}&utm_content=${campaignTitle}'
-       style='display: inline-block'
-       rel='noopener sponsored'>
+      <a href='${response.link_url}?utm_source=tonicpow-widgets&utm_medium=widget&utm_campaign=${widgetId}&utm_content=${campaignTitle}' 
+       style='display: inline-block' 
+       rel='noopener sponsored' 
+       target='_blank'>
         <img src='${response.image_url}' 
           width='${response.width}' 
           height='${response.height}' 
