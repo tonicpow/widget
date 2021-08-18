@@ -1,13 +1,16 @@
 <img src="https://github.com/tonicpow/widget/blob/master/examples/images/tonicpow-logo.png?raw=true" height="100" alt="TonicPow">
 
-> Learn more [about TonicPow](https://tonicpow.com/). Checkout the [TonicPow API Docs](https://docs.tonicpow.com).
+> Learn more [about TonicPow](https://tonicpow.com/?utm_source=github&utm_medium=link&utm_campaign=widget&utm_term=widget&utm_content=widget). Checkout the [TonicPow API Docs](https://docs.tonicpow.com).
 
 [![last commit](https://img.shields.io/github/last-commit/tonicpow/widget.svg?style=flat&v=1)](https://github.com/tonicpow/widget/commits/master)
+[![npm](https://img.shields.io/npm/v/@tonicpow/widget?v=1)](https://www.npmjs.com/package/@tonicpow/widget)
 [![version](https://img.shields.io/github/release-pre/tonicpow/widget.svg?style=flat&v=1)](https://github.com/tonicpow/widget/releases)
 [![Build Status](https://img.shields.io/github/workflow/status/tonicpow/widget/widget-ci?logo=github&v=5)](https://github.com/tonicpow/widget/actions)
+[![Mergify Status](https://img.shields.io/endpoint.svg?url=https://gh.mergify.io/badges/tonicpow/widget&style=flat&v=3)](https://mergify.io)
+<br>
 [![Sponsor](https://img.shields.io/badge/sponsor-TonicPow-181717.svg?logo=github&style=flat&v=1)](https://github.com/sponsors/TonicPow)
 [![slack](https://img.shields.io/badge/slack-tonicpow-orange.svg?style=flat&v=1)](https://atlantistic.slack.com/app_redirect?channel=tonicpow)
-[![npm](https://img.shields.io/npm/v/@tonicpow/widget?v=1)](https://www.npmjs.com/package/@tonicpow/widget)
+
 
 ## Table of Contents
 
@@ -36,7 +39,7 @@
 <script src="https://tonicpow.com/scripts/tonicpow.js"></script>
 ```
 
-2. Insert the widget from your [TonicPow](https://tonicpow.com) account:
+2. Insert the widget from your [TonicPow](https://tonicpow.com/?utm_source=github&utm_medium=sponsor-link&utm_campaign=widget&utm_term=widget&utm_content=widget) account:
 
 ```html
 <div class="tonicpow-widget" data-widget-id="your-widget-id-here"></div>
@@ -66,7 +69,7 @@ make build
 
 ## Documentation
 
-Read more about the [TonicPow API](https://docs.tonicpow.com) platform.
+Read more about the [TonicPow API](https://docs.tonicpow.com/?utm_source=github&utm_medium=sponsor-link&utm_campaign=widget&utm_term=widget&utm_content=widget) platform.
 
 <details>
 <summary><strong><code>Supported Browsers</code></strong></summary>
@@ -161,7 +164,7 @@ Always use the language's best practices and don't optimize early :P
 
 ## Usage
 
-We are using it! Visit [our website](https://tonicpow.com) to see it in action.
+We are using it! Visit [our website](https://tonicpow.com/?utm_source=github&utm_medium=sponsor-link&utm_campaign=widget&utm_term=widget&utm_content=widget) to see it in action.
 
 <br/>
 
@@ -183,6 +186,8 @@ All kinds of contributions are welcome :raised_hands:!
 The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon:.
 You can also support this project by [becoming a sponsor on GitHub](https://github.com/sponsors/TonicPow) :clap:
 or by making a [**bitcoin donation**](https://tonicpow.com/?utm_source=github&utm_medium=sponsor-link&utm_campaign=widget&utm_term=widget&utm_content=widget) to ensure this journey continues indefinitely! :rocket:
+
+[![Stars](https://img.shields.io/github/stars/tonicpow/widget?label=Please%20like%20us&style=social)](https://github.com/tonicpow/widget/stargazers)
 
 <br/>
 
