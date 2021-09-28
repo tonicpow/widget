@@ -178,7 +178,7 @@ We are using it! Visit [our website](https://tonicpow.com/?utm_source=github&utm
 
 ## Contributing
 
-View the [contributing guidelines](CONTRIBUTING.md) and follow the [code of conduct](CODE_OF_CONDUCT.md).
+View the [contributing guidelines](.github/CONTRIBUTING.md) and follow the [code of conduct](.github/CODE_OF_CONDUCT.md).
 
 ### How can I help?
 
