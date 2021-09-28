@@ -124,6 +124,7 @@ clean                Remove previous builds and any test cache data
 install              Installs the dependencies for the package
 lint                 Runs the standard-js lint tool
 outdated             Checks for outdated packages via npm
+publish              Will publish the version to npm
 release              Deploy to npm
 test                 Runs all tests
 help                 Show this help message
