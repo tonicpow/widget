@@ -2,7 +2,7 @@ const environmentLocal = 'local'
 const environmentStaging = 'staging'
 const environmentProduction = 'production'
 
-const Config = {
+const config = {
   apiUrl: 'https://api.tonicpow.com',
   apiUrlLocal: 'http://localhost:3000',
   apiUrlStaging: 'https://api.staging.tonicpow.com',
@@ -22,37 +22,37 @@ const Config = {
   version: 'v0.0.7',
   widgetDivClass: 'tonicpow-widget',
   widgetId: 'data-widget-id',
-}
+} as Config
 
 // isEnvironmentValid will check if the given environment is valid
-Config.isEnvironmentValid = (environment) => Config.environments.includes(environment)
+config.isEnvironmentValid = (environment: string) => config.environments.includes(environment)
 
 // setEnvironment will set the environment
-Config.setEnvironment = (environment) => {
+config.setEnvironment = (environment: string) => {
   // No environment set? use the default
   if (!environment) {
     return
   }
 
   // Not a valid environment?
-  if (!Config.isEnvironmentValid(environment)) {
+  if (!config.isEnvironmentValid(environment)) {
     return
   }
 
   // Set the environment
-  Config.environment = environment
+  config.environment = environment
 
   // Set the API url
-  if (environment === Config.environmentStaging) {
-    Config.apiUrl = Config.apiUrlStaging
-    Config.eventsUrl = Config.eventsUrlStaging
-  } else if (environment === Config.environmentLocal) {
-    Config.apiUrl = Config.apiUrlLocal
-    Config.eventsUrl = Config.eventsUrlLocal
-  } else if (environment === Config.environmentProduction) {
-    Config.apiUrl = Config.apiUrlProduction
-    Config.eventsUrl = Config.eventsUrlProduction
+  if (environment === config.environmentStaging) {
+    config.apiUrl = config.apiUrlStaging
+    config.eventsUrl = config.eventsUrlStaging
+  } else if (environment === config.environmentLocal) {
+    config.apiUrl = config.apiUrlLocal
+    config.eventsUrl = config.eventsUrlLocal
+  } else if (environment === config.environmentProduction) {
+    config.apiUrl = config.apiUrlProduction
+    config.eventsUrl = config.eventsUrlProduction
   }
 }
 
-export default Config
+export default config
