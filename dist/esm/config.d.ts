@@ -1,0 +1,30 @@
+export default class Config {
+    environmentLocal: string;
+    environmentStaging: string;
+    environmentProduction: string;
+    apiUrl: string;
+    apiUrlLocal: string;
+    apiUrlStaging: string;
+    apiUrlProduction: string;
+    eventsUrl: string;
+    eventsUrlLocal: string;
+    eventsUrlStaging: string;
+    eventsUrlProduction: string;
+    customEnvironmentAttribute: string;
+    environment: string;
+    environments: string[];
+    maxSessionDays: number;
+    challengeParameterName: string;
+    sessionParameterName: string;
+    version: string;
+    widgetDivClass: string;
+    widgetIdAttribute: string;
+    hostUrlLocal: string;
+    hostUrlStaging: string;
+    hostUrlProduction: string;
+    hostUrl: string;
+    fbAppId: string;
+    constructor();
+    isEnvironmentValid: (environment: string) => boolean;
+    setEnvironment: (environment: string) => void;
+}

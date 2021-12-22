@@ -125,7 +125,7 @@ export default class TonicPow {
     const data: Record<string, string> = {}
     ;[].forEach.call(el.attributes, function (attr: Record<string, string>) {
       if (/^data-/.test(attr.name)) {
-        const camelCaseName: string = attr.name.substr(5).replace(/-(.)/g, function ($0, $1) {
+        const camelCaseName: string = attr.name.substr(5).replace(/-(.)/g, function (_$0, $1) {
           return $1.toUpperCase()
         })
         data[camelCaseName] = attr.value

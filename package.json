@@ -1,8 +1,7 @@
 {
   "name": "@tonicpow/widget",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "TonicPow helps manage visitor sessions, loads any TonicPow Widgets, and fires events.",
-  "main": "dist/tonicpow.js",
   "author": {
     "name": "TonicPow",
     "email": "support@tonicpow.com",
@@ -26,7 +25,7 @@
     "lint": "eslint src/*.ts --cache --fix && prettier src/*.ts --write && eslint test/*.ts --cache --fix && prettier test/*.ts --write",
     "test": "mocha -r jsdom-global/register test/*.ts",
     "clean": "rimraf ./dist/*",
-    "build": "npm run clean && webpack --config webpack.config.js",
+    "build": "yarn clean && webpack --config webpack.config.js",
     "deploy": "npm publish --access public"
   },
   "license": "Open BSV",
@@ -42,6 +41,9 @@
     "bitcoin",
     "bsv"
   ],
+  "main": "./dist/tonicpow.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
   "devDependencies": {
     "@types/chai": "^4.2.17",
     "@types/expect": "^24.3.0",
@@ -69,12 +71,6 @@
     "webpack": "^5.61.0",
     "webpack-cli": "^4.6.0"
   },
-  "files": [
-    "dist/*"
-  ],
-  "bin": {
-    "tonic-js": "dist/tonicpow.js"
-  },
   "engines": {
     "node": "*"
   },
@@ -88,6 +84,9 @@
       "pre-commit": "lint-staged"
     }
   },
+  "files": [
+    "dist/*"
+  ],
   "lint-staged": {
     "*.{ts,js}": "eslint --cache --fix",
     "*.{ts,js,css,md}": "prettier --write"

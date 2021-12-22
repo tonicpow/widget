@@ -1,5 +1,6 @@
-import TonicPow from 'types'
 import Config from './config'
+import TonicPow from './types'
+
 export default class Events {
   sessionId: string
   start: number
