@@ -5,8 +5,8 @@
 [![last commit](https://img.shields.io/github/last-commit/tonicpow/widget.svg?style=flat&v=1)](https://github.com/tonicpow/widget/commits/master)
 [![npm](https://img.shields.io/npm/v/@tonicpow/widget?v=1)](https://www.npmjs.com/package/@tonicpow/widget)
 [![version](https://img.shields.io/github/release-pre/tonicpow/widget.svg?style=flat&v=1)](https://github.com/tonicpow/widget/releases)
-[![Build Status](https://img.shields.io/github/workflow/status/tonicpow/widget/widget-ci?logo=github&v=5)](https://github.com/tonicpow/widget/actions)
-[![Mergify Status](https://img.shields.io/endpoint.svg?url=https://gh.mergify.io/badges/tonicpow/widget&style=flat&v=3)](https://mergify.io)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/tonicpow/widget/main-ci.yml?branch=master&logo=github&v=5)](https://github.com/tonicpow/widget/actions)
+[![Mergify Status](https://img.shields.io/endpoint.svg?url=https://api.mergify.com/v1/badges/tonicpow/widget&style=flat&v=3)](https://mergify.io)
 <br>
 [![Sponsor](https://img.shields.io/badge/sponsor-TonicPow-181717.svg?logo=github&style=flat&v=1)](https://github.com/sponsors/TonicPow)
 [![slack](https://img.shields.io/badge/slack-tonicpow-orange.svg?style=flat&v=1)](https://atlantistic.slack.com/app_redirect?channel=tonicpow)
