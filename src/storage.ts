@@ -34,7 +34,7 @@ export default class Storage {
     const now = Date.now()
 
     // Set expiration for storage
-    let expires
+    let expires = 0
 
     try {
       expires = localStorage.getItem(`${key}_expires`)
