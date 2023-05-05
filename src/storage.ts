@@ -34,7 +34,7 @@ export default class Storage {
     const now = Date.now()
 
     // Set expiration for storage
-    let expires = 0
+    let expires
 
     try {
       expires = localStorage.getItem(`${key}_expires`)
@@ -48,7 +48,7 @@ export default class Storage {
     }
 
     // Expired
-    if (expires < now) {
+    if (parseInt(expires) < now) {
       this.removeStorage(key)
       return null
     }
