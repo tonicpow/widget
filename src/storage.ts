@@ -48,7 +48,8 @@ export default class Storage {
     }
 
     // Expired
-    if (parseInt(expires) < now) {
+    const iAmSureThisIsANumber: number = expires as number;
+    if (iAmSureThisIsANumber < now) {
       this.removeStorage(key)
       return null
     }
@@ -79,7 +80,7 @@ export default class Storage {
       expires = 24 * 60 * 60 // default: seconds for 1 day
     }
 
-    // Milli seconds since epoch time, lets deal only with integer
+    // Milliseconds since epoch time, lets deal only with integer
     const now = Date.now()
     const schedule = now + expires * 1000
     try {
